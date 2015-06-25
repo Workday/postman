@@ -1,0 +1,34 @@
+apply plugin: 'java'
+apply plugin: 'idea'
+
+sourceCompatibility = JavaVersion.VERSION_1_7
+targetCompatibility = JavaVersion.VERSION_1_7
+
+repositories {
+    mavenCentral()
+}
+
+configurations {
+    provided
+}
+
+sourceSets {
+    main.compileClasspath += configurations.provided
+    test.compileClasspath += configurations.provided
+    test.runtimeClasspath += configurations.provided
+}
+
+idea {
+    module{
+        scopes.PROVIDED.plus += [configurations.provided]
+    }
+}
+
+dependencies {
+    provided 'com.google.android:android:2.3.1'
+    compile 'com.google.guava:guava:18.0'
+    compile 'com.squareup:javawriter:2.5.0'
+    compile 'org.apache.commons:commons-lang3:3.3.2'
+
+	compile fileTree(dir: '../libs', include: 'metajava.jar')
+}
