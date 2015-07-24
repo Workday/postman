@@ -1,0 +1,8 @@
+language: android
+
+android:
+  components:
+    - android-19
+    - build-tools-19.1.0
+
+script: ./gradlew assemble check
