@@ -14,12 +14,14 @@ apply plugin: 'android-sdk-manager'
 apply plugin: 'com.android.library'
 
 repositories {
+    maven {
+        url "http://dl.bintray.com/workday/workday-oss"
+    }
     mavenCentral()
 }
 
 dependencies {
     compile project(':postman')
-    compile fileTree(dir: '../libs', include: 'metajava.jar')
 
     testCompile 'junit:junit:4.12'
     testCompile 'org.robolectric:robolectric:3.0-rc2'
