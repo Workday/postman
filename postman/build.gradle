@@ -5,6 +5,9 @@ sourceCompatibility = JavaVersion.VERSION_1_7
 targetCompatibility = JavaVersion.VERSION_1_7
 
 repositories {
+    maven {
+        url  "http://dl.bintray.com/workday/workday-oss"
+    }
     mavenCentral()
 }
 
@@ -29,6 +32,5 @@ dependencies {
     compile 'com.google.guava:guava:18.0'
     compile 'com.squareup:javawriter:2.5.0'
     compile 'org.apache.commons:commons-lang3:3.3.2'
-
-	compile fileTree(dir: '../libs', include: 'metajava.jar')
+	compile 'com.workday:metajava:0.9'
 }
