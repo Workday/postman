@@ -86,9 +86,25 @@ public class MyParcelable implements Parcelable {
 
 That's all you need to do get Postman working!
 
-## Postman Idioms
+## How to Use Postman
 
-The above example demonstrates the most common way you will use Postman: annotate the class in question with `@Parceled`. Postman will pick up all member fields in the class and write them to or read them from the Parcel when `Postman.writeToParcel(Object, Parcel)` or `Postman.readFromParcel(Class, Parcel)` is called. 
+Add the following lines to your `build.gradle`
+
+```
+repositories {
+    maven {
+        url  "http://dl.bintray.com/workday/workday-oss"
+    }
+}
+
+dependencies {
+    compile 'com.workday:metajava:0.9'
+}
+```
+
+### Postman Idioms
+
+The previous example demonstrates the most common way you will use Postman: annotate the class in question with `@Parceled`. Postman will pick up all member fields in the class and write them to or read them from the Parcel when `Postman.writeToParcel(Object, Parcel)` or `Postman.readFromParcel(Class, Parcel)` is called. 
 
 Unfortunately, there is still some boiler plate code you have to deal with. In your parcelable class, you must include the following lines:
 
@@ -108,21 +124,21 @@ public void writeToParcel(Parcel dest, int flags) {
 
 replacing MyParcelable with your own class name. We hope you agree though that this is much less painful than writing the full implementations yourself.
 
-### What if there's a field I don't want to include in the Parcel?
+#### What if there's a field I don't want to include in the Parcel?
 
 In that case, annotate the offending field with `@NotParceled`.
 
-### What if I don't want to include most of the fields in the Parcel?
+#### What if I don't want to include most of the fields in the Parcel?
 
 No problem. In that case, instead of annotating the class with `@Parceled`, annotate the fields you want included with `@Parceled`. All other fields will be ignored.
 
-## Things to Watch Out For
+### Things to Watch Out For
 
 * Postman cannot access private fields. Any field you want to include in the Parcel must be either package-private (aka default) or public. If you annotate a private field with `@Parceled`, Postman will generate a compilation error. A private field in a class annotated with `@Parceled` will generate a compiler warning.
 * Postman cannot populate final fields. If you annotate a final field with `@Parceled`, Postman will generate a compilation error. A final field in a class annotated with `@Parceled` will generate a compiler warning.
 * Postman requires a public or package-private, no arg constructor in order to instantiate the class. A class marked with `@Parceled` that does not have default constructor will generate a compilation error.
 
-## Working with Proguard
+### Working with Proguard
 
 If you're using [ProGuard](http://proguard.sourceforge.net/), you must add the following line to your ProGuard rules
 
