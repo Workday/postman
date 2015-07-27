@@ -98,7 +98,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.workday:metajava:0.9'
+    compile 'com.workday:postman:0.9'
 }
 ```
 
