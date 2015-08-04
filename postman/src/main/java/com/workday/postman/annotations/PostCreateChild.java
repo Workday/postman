@@ -21,7 +21,7 @@ import java.lang.annotation.Target;
  * must take a single argument of type {@link Object}. Objects contained directly inside of lists or maps (keys or
  * values in the case of maps) that are fields of this object will also be passed to the target method. The method
  * should handle a null argument gracefully.
- * <p/>
+ * <p>
  * This can be useful if this object needs to recreate pointers back from the child to itself.
  *
  * @author nathan.taylor
