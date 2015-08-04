@@ -16,15 +16,13 @@ import java.util.Map;
 
 /**
  * A utility class that assists with writing {@link Map}s to {@link Bundle}s.
- * <p/>
+ * <p>
  * This implementation can handle the following types of values and keys in maps:
- * <pre>
- *     <ul>
- *         <li>{@link Integer}</li>
- *         <li>{@link String}</li>
- *         <li>{@link Parcelable}</li>
- *     </ul>
- * </pre>
+ * <ul>
+ *     <li>{@link Integer}</li>
+ *     <li>{@link String}</li>
+ *     <li>{@link Parcelable}</li>
+ * </ul>
  *
  * @author nathan.taylor
  * @since 2014-5-12
