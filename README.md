@@ -92,13 +92,11 @@ Add the following lines to your `build.gradle`
 
 ```
 repositories {
-    maven {
-        url  "http://dl.bintray.com/workday/workday-oss"
-    }
+    mavenCentral()
 }
 
 dependencies {
-    compile 'com.workday:postman:0.9'
+    compile 'com.workday:postman:1.0'
 }
 ```
 
