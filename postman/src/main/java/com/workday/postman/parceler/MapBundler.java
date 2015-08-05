@@ -9,9 +9,11 @@ package com.workday.postman.parceler;
 
 import android.os.Bundle;
 import android.os.Parcelable;
-import com.google.common.base.Preconditions;
+
+import com.workday.postman.util.Preconditions;
 
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -77,8 +79,8 @@ public class MapBundler {
         }
 
         Preconditions.checkState(keys.size() == values.size(),
-                                 String.format("Expected keys.size() (%d) and values.size() (%d) to be the same.",
-                                               keys.size(), values.size())
+                String.format(Locale.US, "Expected keys.size() (%d) and values.size() (%d) to be the same.",
+                        keys.size(), values.size())
         );
 
         for (int i = 0; i < keys.size(); i++) {

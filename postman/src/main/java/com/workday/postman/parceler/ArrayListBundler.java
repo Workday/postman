@@ -9,9 +9,11 @@ package com.workday.postman.parceler;
 
 import android.os.Bundle;
 import android.os.Parcelable;
-import com.google.common.base.Preconditions;
+
+import com.workday.postman.util.Preconditions;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 /**
  * @author nathan.taylor
@@ -93,8 +95,8 @@ class ArrayListBundler {
             innerListBundler = (InnerListBundler<T>) PARCELABLE_LIST_BUNDLER;
         }
         Preconditions.checkArgument(innerListBundler != null,
-                                    String.format("Postman cannot bundle lists containing items of type %s",
-                                                  clazz.getName()));
+                String.format(Locale.US, "Postman cannot bundle lists containing items of type %s",
+                        clazz.getName()));
         return innerListBundler;
     }
 
