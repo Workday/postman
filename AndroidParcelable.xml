@@ -1,0 +1,23 @@
+<templateSet group="AndroidParcelable">
+  <template name="postman" value="$className$() {&#10;  // default constructor required by Postman&#10;}&#10;  &#10;@Override&#10;public int describeContents() {&#10;  return 0;&#10;}&#10;&#10;@Override&#10;public void writeToParcel(@NotNull Parcel dest, int flags) {&#10;    Postman.writeToParcel(this, dest);&#10;}&#10;&#10;public static final Parcelable.Creator&lt;$className$&gt; CREATOR = Postman.getCreator($className$.class); " shortcut="ENTER" description="Create a Postman block for your current class" toReformat="true" toShortenFQNames="true">
+    <variable name="className" expression="className()" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="HTML_TEXT" value="false" />
+      <option name="HTML" value="false" />
+      <option name="XSL_TEXT" value="false" />
+      <option name="XML" value="false" />
+      <option name="JAVA_CODE" value="false" />
+      <option name="JAVA_STATEMENT" value="false" />
+      <option name="JAVA_EXPRESSION" value="false" />
+      <option name="JAVA_DECLARATION" value="true" />
+      <option name="JAVA_COMMENT" value="false" />
+      <option name="JAVA_STRING" value="false" />
+      <option name="COMPLETION" value="false" />
+      <option name="GROOVY" value="false" />
+      <option name="GROOVY_EXPRESSION" value="false" />
+      <option name="GROOVY_STATEMENT" value="false" />
+      <option name="GROOVY_DECLARATION" value="false" />
+      <option name="OTHER" value="false" />
+    </context>
+  </template>
+</templateSet>
