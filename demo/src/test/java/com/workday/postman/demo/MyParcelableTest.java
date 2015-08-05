@@ -9,10 +9,11 @@ package com.workday.postman.demo;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
+
 import com.workday.postman.Postman;
 import com.workday.postman.PostmanException;
+import com.workday.postman.util.CollectionUtils;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
@@ -48,7 +49,8 @@ public class MyParcelableTest {
         in.myChildParcelable.aBoolean = true;
         in.myChildParcelable.aString = "Robby";
         in.myChildParcelable.notParceled = "I shouldn't be retained.";
-        in.myParcelableList = Lists.newArrayList(new MyChildParcelable("a", false), new MyChildParcelable("b", true));
+        in.myParcelableList = CollectionUtils.newArrayList(new MyChildParcelable("a", false),
+                new MyChildParcelable("b", true));
         in.myStringMap = new HashMap<>();
         in.myStringMap.put("one key", "one value");
         in.myStringMap.put("two key", "two value");
@@ -77,7 +79,7 @@ public class MyParcelableTest {
     @Test
     public void testStringArrayList() {
         MyParcelable in = new MyParcelable();
-        ArrayList<String> stringList = Lists.newArrayList("one", "two");
+        ArrayList<String> stringList = CollectionUtils.newArrayList("one", "two");
         in.myStringList = stringList;
 
         MyParcelable out = writeAndReadParcelable(in);
@@ -88,7 +90,7 @@ public class MyParcelableTest {
     @Test
     public void testCharSequenceArrayList() {
         MyParcelable in = new MyParcelable();
-        ArrayList<CharSequence> charSequenceList = Lists.<CharSequence> newArrayList("one", "two");
+        ArrayList<CharSequence> charSequenceList = CollectionUtils.<CharSequence> newArrayList("one", "two");
         in.myCharSequenceList = charSequenceList;
 
         MyParcelable out = writeAndReadParcelable(in);
@@ -99,7 +101,7 @@ public class MyParcelableTest {
     @Test
     public void testSet() {
         MyParcelable in = new MyParcelable();
-        Set<Integer> set = Sets.newHashSet(1, 2, 3);
+        Set<Integer> set = CollectionUtils.newHashSet(1, 2, 3);
         in.myIntegerSet = set;
 
         MyParcelable out = writeAndReadParcelable(in);
@@ -153,7 +155,7 @@ public class MyParcelableTest {
     public void testParcelableWithPostCreateAction() {
         MyParcelableWithPostCreateAction in = new MyParcelableWithPostCreateAction();
         in.myChildParcelable = new MyChildParcelable("child", false);
-        in.myChildren = Lists.newArrayList(new MyChildParcelable("list child", false));
+        in.myChildren = CollectionUtils.newArrayList(new MyChildParcelable("list child", false));
         in.mySerializable = new MySerializable();
         in.myMap = new HashMap<>();
         in.myMap.put(new MyChildParcelable("key", false), new MyChildParcelable("value", false));

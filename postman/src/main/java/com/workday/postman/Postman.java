@@ -10,12 +10,12 @@ package com.workday.postman;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.Parcelable.Creator;
-import com.google.common.collect.Maps;
 import com.workday.meta.ConcreteTypeNames;
 import com.workday.postman.codegen.Names;
 import com.workday.postman.annotations.Parceled;
 import com.workday.postman.parceler.Parceler;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -28,8 +28,8 @@ import java.util.Map;
  */
 public class Postman {
 
-    private static Map<Class<?>, Parceler<?>> parcelerMap = Maps.newHashMap();
-    private static Map<Class<?>, Parcelable.Creator<?>> creatorMap = Maps.newHashMap();
+    private static Map<Class<?>, Parceler<?>> parcelerMap = new HashMap<>();
+    private static Map<Class<?>, Parcelable.Creator<?>> creatorMap = new HashMap<>();
 
     /**
      * Write the specified Object to a {@link Parcel}.

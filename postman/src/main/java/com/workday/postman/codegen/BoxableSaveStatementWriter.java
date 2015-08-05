@@ -9,6 +9,7 @@ package com.workday.postman.codegen;
 
 import com.squareup.javawriter.JavaWriter;
 import com.workday.meta.MetaTypes;
+
 import org.apache.commons.lang3.StringUtils;
 
 import javax.lang.model.element.ExecutableElement;

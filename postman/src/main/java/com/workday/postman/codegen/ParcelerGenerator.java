@@ -7,7 +7,6 @@
 
 package com.workday.postman.codegen;
 
-import com.google.common.collect.Lists;
 import com.squareup.javawriter.JavaWriter;
 import com.workday.meta.MetaTypeNames;
 import com.workday.meta.MetaTypes;
@@ -147,7 +146,7 @@ class ParcelerGenerator {
     }
 
     private List<com.workday.postman.codegen.SaveStatementWriter> createSaveStatementWriterList() {
-        List<SaveStatementWriter> list = Lists.newArrayList();
+        List<SaveStatementWriter> list = new ArrayList<>();
         list.add(new BoxableSaveStatementWriter(metaTypes));
         list.add(new StringSaveStatementWriter(metaTypes));
         list.add(new CharSequenceSaveStatementWriter(metaTypes));

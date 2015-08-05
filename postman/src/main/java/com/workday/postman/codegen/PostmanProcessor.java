@@ -7,11 +7,11 @@
 
 package com.workday.postman.codegen;
 
-import com.google.common.collect.Sets;
 import com.workday.postman.annotations.NotParceled;
 import com.workday.postman.annotations.Parceled;
 import com.workday.postman.annotations.PostCreateChild;
 import com.workday.postman.parceler.Parceler;
+import com.workday.postman.util.CollectionUtils;
 
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.Processor;
@@ -68,8 +68,9 @@ public class PostmanProcessor extends AbstractProcessor {
 
     @Override
     public Set<String> getSupportedAnnotationTypes() {
-        return Sets.newHashSet(Parceled.class.getCanonicalName(), NotParceled.class.getCanonicalName(),
-                               PostCreateChild.class.getCanonicalName());
+        return CollectionUtils.newHashSet(Parceled.class.getCanonicalName(),
+                NotParceled.class.getCanonicalName(),
+                PostCreateChild.class.getCanonicalName());
     }
 
     @Override
