@@ -122,6 +122,14 @@ public void writeToParcel(Parcel dest, int flags) {
 
 replacing MyParcelable with your own class name. We hope you agree though that this is much less painful than writing the full implementations yourself.
 
+However, to make this part easier, we have included a [live template](https://www.jetbrains.com/idea/help/live-templates.html) that you can use in Android Studio. Include [AndroidParcelable.xml](./AndroidParcelable.xml) in the following directory depending on your operating system.
+
+- Windows: `<your home directory>\.AndroidStudio<version number>\config\templates`
+- Linux: `~/.AndroidStudio<version number>/config/templates`
+- OS X: `~/Library/Preferences/AndroidStudio<version number>/templates`
+
+Restart Android Studio. Then in your Parcelable class, type `postman` on an empty line and hit enter. Android Studio will write the block for you (sans imports).
+
 #### What if there's a field I don't want to include in the Parcel?
 
 In that case, annotate the offending field with `@NotParceled`.
