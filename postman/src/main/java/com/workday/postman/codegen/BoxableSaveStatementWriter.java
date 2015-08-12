@@ -10,8 +10,6 @@ package com.workday.postman.codegen;
 import com.squareup.javawriter.JavaWriter;
 import com.workday.meta.MetaTypes;
 
-import org.apache.commons.lang3.StringUtils;
-
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.VariableElement;
 import javax.lang.model.type.TypeMirror;
@@ -52,6 +50,8 @@ class BoxableSaveStatementWriter
     }
 
     private String getSaveType(TypeMirror type) {
-        return StringUtils.capitalize(metaTypes.asPrimitive(type).toString());
+        String typeString = metaTypes.asPrimitive(type).toString();
+        if (typeString == null || typeString.length() == 0) return typeString;
+        else return typeString.substring(0, 1).toUpperCase() + typeString.substring(1);
     }
 }
