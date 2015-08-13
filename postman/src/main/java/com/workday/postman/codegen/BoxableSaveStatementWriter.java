@@ -51,7 +51,6 @@ class BoxableSaveStatementWriter
 
     private String getSaveType(TypeMirror type) {
         String typeString = metaTypes.asPrimitive(type).toString();
-        if (typeString == null || typeString.length() == 0) return typeString;
-        else return typeString.substring(0, 1).toUpperCase() + typeString.substring(1);
+        return typeString.substring(0, 1).toUpperCase() + typeString.substring(1);
     }
 }
