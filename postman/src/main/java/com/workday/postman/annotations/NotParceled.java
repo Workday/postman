@@ -13,8 +13,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Indicates to the Postman framework that a field should not be included in the Parcel. This annotation only makes
- * sense if the enclosing class of the field is annotated with {@literal @}{@link Parceled}.
+ * Indicates to the Postman framework that a field should not be included in the Parcel. This
+ * annotation only makes sense if the enclosing class of the field is annotated with
+ * {@literal@}{@link Parceled}.
  *
  * @author nathan.taylor
  * @since 2013-10-8

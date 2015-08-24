@@ -50,7 +50,7 @@ public class MyParcelableTest {
         in.myChildParcelable.aString = "Robby";
         in.myChildParcelable.notParceled = "I shouldn't be retained.";
         in.myParcelableList = CollectionUtils.newArrayList(new MyChildParcelable("a", false),
-                new MyChildParcelable("b", true));
+                                                           new MyChildParcelable("b", true));
         in.myStringMap = new HashMap<>();
         in.myStringMap.put("one key", "one value");
         in.myStringMap.put("two key", "two value");
@@ -90,7 +90,8 @@ public class MyParcelableTest {
     @Test
     public void testCharSequenceArrayList() {
         MyParcelable in = new MyParcelable();
-        ArrayList<CharSequence> charSequenceList = CollectionUtils.<CharSequence> newArrayList("one", "two");
+        ArrayList<CharSequence> charSequenceList = CollectionUtils.<CharSequence>newArrayList(
+                "one", "two");
         in.myCharSequenceList = charSequenceList;
 
         MyParcelable out = writeAndReadParcelable(in);
@@ -141,11 +142,10 @@ public class MyParcelableTest {
         boolean exceptionCaught = false;
         try {
             Postman.writeToParcel(o, Parcel.obtain());
-        }
-        catch (PostmanException e) {
+        } catch (PostmanException e) {
             exceptionCaught = true;
             assertTrue("expected cause to be of type ClassNotFoundException but found " +
-                       e.getCause().getClass().getCanonicalName(),
+                               e.getCause().getClass().getCanonicalName(),
                        e.getCause() instanceof ClassNotFoundException);
         }
         assertTrue(exceptionCaught);
@@ -165,7 +165,8 @@ public class MyParcelableTest {
         assertEquals("child seen", out.myChildParcelable.aString);
         assertEquals("list child seen", out.myChildren.get(0).aString);
         assertNotNull(out.mySerializable);
-        Map.Entry<MyChildParcelable, MyChildParcelable> entry = out.myMap.entrySet().iterator().next();
+        Map.Entry<MyChildParcelable, MyChildParcelable> entry =
+                out.myMap.entrySet().iterator().next();
         assertEquals("key seen", entry.getKey().aString);
         assertEquals("value seen", entry.getValue().aString);
         assertEquals("string", out.string);

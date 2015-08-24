@@ -18,4 +18,7 @@ public final class Names {
     public static final String PARCELER_SUFFIX = "$$" + Parceler.class.getSimpleName();
     public static final String PARCELABLE = "android.os.Parcelable";
 
+    private Names() {
+    }
+
 }

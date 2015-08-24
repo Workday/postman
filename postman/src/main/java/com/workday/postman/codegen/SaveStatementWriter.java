@@ -9,10 +9,11 @@ package com.workday.postman.codegen;
 
 import com.squareup.javawriter.JavaWriter;
 
-import javax.lang.model.element.ExecutableElement;
-import javax.lang.model.element.VariableElement;
 import java.io.IOException;
 import java.util.Collection;
+
+import javax.lang.model.element.ExecutableElement;
+import javax.lang.model.element.VariableElement;
 
 /**
  * @author nathan.taylor
@@ -22,7 +23,8 @@ interface SaveStatementWriter {
 
     boolean isApplicable(VariableElement field);
 
-    void writeFieldReadStatement(VariableElement field, Collection<ExecutableElement> postCreateChildMethods,
+    void writeFieldReadStatement(VariableElement field,
+                                 Collection<ExecutableElement> postCreateChildMethods,
                                  JavaWriter writer)
             throws IOException;
 

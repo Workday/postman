@@ -6,6 +6,9 @@ package com.workday.postman.util;
  */
 public class Preconditions {
 
+    private Preconditions() {
+    }
+
     public static void checkState(boolean expression, String message) {
         if (!expression) {
             throw new IllegalStateException(message);

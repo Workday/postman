@@ -13,13 +13,6 @@ import com.workday.meta.MetaTypes;
 import com.workday.meta.Modifiers;
 import com.workday.postman.parceler.Parceler;
 
-import javax.annotation.processing.ProcessingEnvironment;
-import javax.lang.model.element.ExecutableElement;
-import javax.lang.model.element.Modifier;
-import javax.lang.model.element.TypeElement;
-import javax.lang.model.element.VariableElement;
-import javax.tools.Diagnostic;
-import javax.tools.JavaFileObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -28,6 +21,14 @@ import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import javax.annotation.processing.ProcessingEnvironment;
+import javax.lang.model.element.ExecutableElement;
+import javax.lang.model.element.Modifier;
+import javax.lang.model.element.TypeElement;
+import javax.lang.model.element.VariableElement;
+import javax.tools.Diagnostic;
+import javax.tools.JavaFileObject;
 
 /**
  * @author nathan.taylor
@@ -54,9 +55,11 @@ class ParcelerGenerator {
         this.elementToParcel = elementToParcel;
         elementQualifiedName = elementToParcel.getQualifiedName().toString();
         parcelerName = MetaTypeNames.constructTypeName(elementToParcel, Names.PARCELER_SUFFIX);
-        ParceledElementExtractor parceledElementExtractor = new ParceledElementExtractor(processingEnv);
+        ParceledElementExtractor parceledElementExtractor =
+                new ParceledElementExtractor(processingEnv);
         this.parceledFields = parceledElementExtractor.extractParceledFields(elementToParcel);
-        this.postCreateChildMethods = parceledElementExtractor.extractPostCreateChildMethods(elementToParcel);
+        this.postCreateChildMethods =
+                parceledElementExtractor.extractPostCreateChildMethods(elementToParcel);
         saveStatementWriters = createSaveStatementWriterList();
     }
 
@@ -65,7 +68,8 @@ class ParcelerGenerator {
         JavaFileObject sourceFile = processingEnv.getFiler().createSourceFile(parcelerName);
         JavaWriter writer = new JavaWriter(sourceFile.openWriter());
 
-        writer.emitPackage(processingEnv.getElementUtils().getPackageOf(elementToParcel).getQualifiedName().toString());
+        writer.emitPackage(processingEnv.getElementUtils().getPackageOf(
+                elementToParcel).getQualifiedName().toString());
 
         writer.emitImports(getImports());
         writer.emitEmptyLine();
@@ -114,13 +118,17 @@ class ParcelerGenerator {
 
     private void writeReadFromParcelMethod(JavaWriter writer) throws IOException {
         writer.emitAnnotation(Override.class);
-        writer.beginMethod(elementCompressedName, "readFromParcel", Modifiers.PUBLIC, "Parcel", "parcel");
+        writer.beginMethod(elementCompressedName, "readFromParcel", Modifiers.PUBLIC, "Parcel",
+                           "parcel");
 
         writer.emitStatement("%s object = new %s()", elementCompressedName, elementCompressedName);
         writer.emitStatement("Bundle bundle = parcel.readBundle()");
-        writer.emitStatement("bundle.setClassLoader(%s.class.getClassLoader())", elementCompressedName);
+        writer.emitStatement("bundle.setClassLoader(%s.class.getClassLoader())",
+                             elementCompressedName);
         for (VariableElement field : parceledFields) {
-            getSaveStatementWriter(field).writeFieldReadStatement(field, postCreateChildMethods, writer);
+            getSaveStatementWriter(field).writeFieldReadStatement(field,
+                                                                  postCreateChildMethods,
+                                                                  writer);
         }
         writer.emitStatement("return object");
         writer.endMethod();
@@ -128,19 +136,27 @@ class ParcelerGenerator {
 
     private void writeNewArrayMethod(JavaWriter writer) throws IOException {
         writer.emitAnnotation(Override.class);
-        writer.beginMethod(String.format("%s[]", elementCompressedName), "newArray", Modifiers.PUBLIC, "int", "size");
+        writer.beginMethod(String.format("%s[]", elementCompressedName),
+                           "newArray",
+                           Modifiers.PUBLIC,
+                           "int",
+                           "size");
         writer.emitStatement("return new %s[size]", elementCompressedName);
         writer.endMethod();
     }
 
-    private com.workday.postman.codegen.SaveStatementWriter getSaveStatementWriter(VariableElement field) {
-        for (com.workday.postman.codegen.SaveStatementWriter saveStatementWriter : saveStatementWriters) {
+    private com.workday.postman.codegen.SaveStatementWriter getSaveStatementWriter(
+            VariableElement field) {
+        for (com.workday.postman.codegen.SaveStatementWriter saveStatementWriter :
+                saveStatementWriters) {
             if (saveStatementWriter.isApplicable(field)) {
                 return saveStatementWriter;
             }
         }
-        String errorMessage = String.format("%s.%s of type %s cannot be written to a Bundle.", elementQualifiedName,
-                                            field.getSimpleName().toString(), field.asType().toString());
+        String errorMessage = String.format("%s.%s of type %s cannot be written to a Bundle.",
+                                            elementQualifiedName,
+                                            field.getSimpleName().toString(),
+                                            field.asType().toString());
         processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, errorMessage, field);
         return DO_NOTHING_SAVE_STATEMENT_WRITER;
     }
