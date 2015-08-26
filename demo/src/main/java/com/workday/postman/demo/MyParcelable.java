@@ -9,6 +9,7 @@ package com.workday.postman.demo;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+
 import com.workday.postman.Postman;
 import com.workday.postman.annotations.Parceled;
 
@@ -21,8 +22,7 @@ import java.util.Set;
  * @author nathan.taylor
  * @since 2013-9-25-15:40
  */
-public class MyParcelable
-        implements Parcelable {
+public class MyParcelable implements Parcelable {
 
     public static final Creator<MyParcelable> CREATOR = Postman.getCreator(MyParcelable.class);
 

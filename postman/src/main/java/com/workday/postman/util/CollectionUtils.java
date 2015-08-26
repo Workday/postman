@@ -20,6 +20,9 @@ public class CollectionUtils {
      */
     public static final int MAX_POWER_OF_TWO = 1 << (Integer.SIZE - 2);
 
+    private CollectionUtils() {
+    }
+
     public static <E> ArrayList<E> newArrayList(E... elements) {
         Preconditions.checkNotNull(elements, "elements");
         ArrayList<E> list = new ArrayList<>(elements.length);
@@ -40,14 +43,13 @@ public class CollectionUtils {
     }
 
     /**
-     * Returns a capacity that is sufficient to keep the map from being resized as
-     * long as it grows no larger than expectedSize and the load factor is >= its
-     * default (0.75).
+     * Returns a capacity that is sufficient to keep the map from being resized as long as it grows
+     * no larger than expectedSize and the load factor is >= its default (0.75).
      */
     static int mapCapacity(int expectedSize) {
         if (expectedSize < 3) {
             Preconditions.checkArgument(expectedSize >= 0,
-                    "Size must be nonnegative but was " + expectedSize);
+                                        "Size must be nonnegative but was " + expectedSize);
             return expectedSize + 1;
         }
         if (expectedSize < MAX_POWER_OF_TWO) {

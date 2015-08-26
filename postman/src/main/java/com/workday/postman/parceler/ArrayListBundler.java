@@ -21,7 +21,11 @@ import java.util.Locale;
  */
 class ArrayListBundler {
 
-    private static final InnerListBundler<Integer> INTEGER_LIST_BUNDLER = new InnerListBundler<Integer>() {
+    private ArrayListBundler() {
+    }
+
+    private static final InnerListBundler<Integer> INTEGER_LIST_BUNDLER
+            = new InnerListBundler<Integer>() {
 
         @Override
         public void writeToBundle(ArrayList<Integer> list, Bundle bundle, String key) {
@@ -34,7 +38,8 @@ class ArrayListBundler {
         }
     };
 
-    private static final InnerListBundler<String> STRING_LIST_BUNDLER = new InnerListBundler<String>() {
+    private static final InnerListBundler<String> STRING_LIST_BUNDLER
+            = new InnerListBundler<String>() {
 
         @Override
         public void writeToBundle(ArrayList<String> list, Bundle bundle, String key) {
@@ -61,7 +66,8 @@ class ArrayListBundler {
         }
     };
 
-    private static final InnerListBundler<Parcelable> PARCELABLE_LIST_BUNDLER = new InnerListBundler<Parcelable>() {
+    private static final InnerListBundler<Parcelable> PARCELABLE_LIST_BUNDLER
+            = new InnerListBundler<Parcelable>() {
 
         @Override
         public void writeToBundle(ArrayList<Parcelable> list, Bundle bundle, String key) {
@@ -74,11 +80,13 @@ class ArrayListBundler {
         }
     };
 
-    public static <T> void writeArrayListToBundle(ArrayList<T> list, Bundle bundle, Class<T> itemClass, String key) {
+    public static <T> void writeArrayListToBundle(ArrayList<T> list, Bundle bundle,
+                                                  Class<T> itemClass, String key) {
         getListBundlerForItemClass(itemClass).writeToBundle(list, bundle, key);
     }
 
-    public static <T> ArrayList<T> readArrayListFromBundle(Bundle bundle, Class<T> itemClass, String key) {
+    public static <T> ArrayList<T> readArrayListFromBundle(Bundle bundle, Class<T> itemClass,
+                                                           String key) {
         return getListBundlerForItemClass(itemClass).readFromBundle(bundle, key);
     }
 
@@ -95,8 +103,10 @@ class ArrayListBundler {
             innerListBundler = (InnerListBundler<T>) PARCELABLE_LIST_BUNDLER;
         }
         Preconditions.checkArgument(innerListBundler != null,
-                String.format(Locale.US, "Postman cannot bundle lists containing items of type %s",
-                        clazz.getName()));
+                                    String.format(Locale.US,
+                                                  "Postman cannot bundle lists containing items "
+                                                          + "of type %s",
+                                                  clazz.getName()));
         return innerListBundler;
     }
 
@@ -107,6 +117,8 @@ class ArrayListBundler {
     private interface InnerListBundler<T> {
 
         void writeToBundle(ArrayList<T> list, Bundle bundle, String key);
+
         ArrayList<T> readFromBundle(Bundle bundle, String key);
     }
+
 }

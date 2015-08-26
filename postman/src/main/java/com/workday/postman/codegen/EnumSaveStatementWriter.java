@@ -10,11 +10,12 @@ package com.workday.postman.codegen;
 import com.squareup.javawriter.JavaWriter;
 import com.workday.meta.MetaTypes;
 
+import java.io.IOException;
+import java.util.Collection;
+
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.Name;
 import javax.lang.model.element.VariableElement;
-import java.io.IOException;
-import java.util.Collection;
 
 /**
  * @author nathan.taylor
@@ -35,7 +36,8 @@ class EnumSaveStatementWriter
     }
 
     @Override
-    public void writeFieldReadStatement(VariableElement field, Collection<ExecutableElement> postCreateChildMethods,
+    public void writeFieldReadStatement(VariableElement field,
+                                        Collection<ExecutableElement> postCreateChildMethods,
                                         JavaWriter writer)
             throws IOException {
         String enumType = field.asType().toString();

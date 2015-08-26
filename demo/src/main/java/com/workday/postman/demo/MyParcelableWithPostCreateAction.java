@@ -9,6 +9,7 @@ package com.workday.postman.demo;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+
 import com.workday.postman.Postman;
 import com.workday.postman.annotations.Parceled;
 import com.workday.postman.annotations.PostCreateChild;

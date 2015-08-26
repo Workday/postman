@@ -9,6 +9,7 @@ package com.workday.postman.demo;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+
 import com.workday.postman.Postman;
 import com.workday.postman.annotations.Parceled;
 
@@ -17,14 +18,14 @@ import com.workday.postman.annotations.Parceled;
  * @since 2013-12-30
  */
 @Parceled
-public class MyParcelableWithEnums
-        implements Parcelable {
+public class MyParcelableWithEnums implements Parcelable {
 
     MyEnum myEnum1;
     MyEnum myEnum2;
     MyEnum myEnum3;
 
-    public static final Creator<MyParcelableWithEnums> CREATOR = Postman.getCreator(MyParcelableWithEnums.class);
+    public static final Creator<MyParcelableWithEnums> CREATOR =
+            Postman.getCreator(MyParcelableWithEnums.class);
 
     @Override
     public int describeContents() {

@@ -8,8 +8,11 @@
 package com.workday.postman.demo;
 
 import android.os.Bundle;
+
 import com.workday.postman.parceler.MapBundler;
+
 import junit.framework.Assert;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
@@ -69,7 +72,8 @@ public class MapBundlerTest {
         } catch (IllegalArgumentException e) {
             writeThrewException = true;
         }
-        assertTrue("MapBundler.writeMapToBundle throws IllegalArgumentException", writeThrewException);
+        assertTrue("MapBundler.writeMapToBundle throws IllegalArgumentException",
+                   writeThrewException);
 
         map.clear();
         boolean readThrewException = false;
@@ -78,7 +82,8 @@ public class MapBundlerTest {
         } catch (IllegalArgumentException e) {
             readThrewException = true;
         }
-        assertTrue("MapBundler.readMapFromBundle throws IllegalArgumentException", readThrewException);
+        assertTrue("MapBundler.readMapFromBundle throws IllegalArgumentException",
+                   readThrewException);
     }
 
     @Test
