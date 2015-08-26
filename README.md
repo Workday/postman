@@ -96,7 +96,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.workday:postman:1.0'
+    compile 'com.workday:postman:1.1'
 }
 ```
 
