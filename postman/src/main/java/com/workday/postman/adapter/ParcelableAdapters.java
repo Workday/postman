@@ -11,6 +11,7 @@ import android.os.Parcelable;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.Collection;
 import java.util.Locale;
 
 /**
@@ -20,6 +21,19 @@ import java.util.Locale;
 public class ParcelableAdapters {
 
     private ParcelableAdapters() {
+    }
+
+    public static void toParcelableCollection(Collection<?> source, Collection<Parcelable> target) {
+        for (Object o : source) {
+            target.add(asParcelable(o));
+        }
+    }
+
+    public static Object unwrapParcelable(Parcelable p) {
+        if (p instanceof ParcelableAdapter) {
+            return ((ParcelableAdapter) p).getValue();
+        }
+        return p;
     }
 
     public static Parcelable asParcelable(Object o) {

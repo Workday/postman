@@ -10,10 +10,9 @@ package com.workday.postman.parceler;
 import android.os.Bundle;
 import android.os.Parcelable;
 
-import com.workday.postman.util.Preconditions;
+import com.workday.postman.adapter.ParcelableAdapters;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 /**
  * @author nathan.taylor
@@ -80,6 +79,28 @@ class ArrayListBundler {
         }
     };
 
+    private static final InnerListBundler<Object> FALLBACK_LIST_BUNDLER =
+            new InnerListBundler<Object>() {
+
+
+                @Override
+                public void writeToBundle(ArrayList<Object> list, Bundle bundle, String key) {
+                    ArrayList<Parcelable> wrapped = new ArrayList<>(list.size());
+                    ParcelableAdapters.toParcelableCollection(list, wrapped);
+                    bundle.putParcelableArrayList(key, wrapped);
+                }
+
+                @Override
+                public ArrayList<Object> readFromBundle(Bundle bundle, String key) {
+                    ArrayList<Parcelable> wrapped = bundle.getParcelableArrayList(key);
+                    ArrayList<Object> unwrapped = new ArrayList<>(wrapped.size());
+                    for (Parcelable parcelable : wrapped) {
+                        unwrapped.add(ParcelableAdapters.unwrapParcelable(parcelable));
+                    }
+                    return unwrapped;
+                }
+            };
+
     public static <T> void writeArrayListToBundle(ArrayList<T> list, Bundle bundle,
                                                   Class<T> itemClass, String key) {
         getListBundlerForItemClass(itemClass).writeToBundle(list, bundle, key);
@@ -92,7 +113,7 @@ class ArrayListBundler {
 
     @SuppressWarnings("unchecked")
     private static <T> InnerListBundler<T> getListBundlerForItemClass(Class<T> clazz) {
-        InnerListBundler<T> innerListBundler = null;
+        InnerListBundler<T> innerListBundler;
         if (Integer.class.isAssignableFrom(clazz)) {
             innerListBundler = (InnerListBundler<T>) INTEGER_LIST_BUNDLER;
         } else if (String.class.isAssignableFrom(clazz)) {
@@ -101,12 +122,12 @@ class ArrayListBundler {
             innerListBundler = (InnerListBundler<T>) CHAR_SEQUENCE_LIST_BUNDLER;
         } else if (Parcelable.class.isAssignableFrom(clazz)) {
             innerListBundler = (InnerListBundler<T>) PARCELABLE_LIST_BUNDLER;
+        } else {
+            // This is safe because fallback can handle any type, and the arraylist returned will
+            // contain the same type of objects as the one given
+            innerListBundler = (InnerListBundler<T>) FALLBACK_LIST_BUNDLER;
         }
-        Preconditions.checkArgument(innerListBundler != null,
-                                    String.format(Locale.US,
-                                                  "Postman cannot bundle lists containing items "
-                                                          + "of type %s",
-                                                  clazz.getName()));
+
         return innerListBundler;
     }
 
