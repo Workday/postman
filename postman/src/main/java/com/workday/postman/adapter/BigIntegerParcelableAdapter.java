@@ -9,7 +9,6 @@ package com.workday.postman.adapter;
 
 import android.os.Parcel;
 
-import java.math.BigDecimal;
 import java.math.BigInteger;
 
 /**

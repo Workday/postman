@@ -27,7 +27,7 @@ public class CharParcelableAdapter implements ParcelableAdapter<Character> {
 
                 @Override
                 public CharParcelableAdapter createFromParcel(Parcel source) {
-                    return new CharParcelableAdapter((char)source.readInt());
+                    return new CharParcelableAdapter((char) source.readInt());
                 }
 
                 @Override

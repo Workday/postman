@@ -1,14 +1,5 @@
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-    }
-}
 apply plugin: 'java'
 apply plugin: 'idea'
-apply plugin: 'kotlin'
 apply plugin: 'checkstyle'
 apply from: file('../gradle/gradle-mvn-push.gradle')
 
@@ -48,5 +39,4 @@ dependencies {
     provided 'com.google.android:android:2.3.1'
     compile 'com.squareup:javawriter:2.5.0'
     compile 'com.workday:metajava:1.0'
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }

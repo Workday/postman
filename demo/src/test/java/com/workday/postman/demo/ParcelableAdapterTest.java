@@ -7,7 +7,7 @@
 
 package com.workday.postman.demo;
 
-import com.workday.postman.adapter.AdapterPackage;
+import com.workday.postman.adapter.ParcelableAdapters;
 import com.workday.postman.adapter.BigDecimalParcelableAdapter;
 import com.workday.postman.adapter.BigIntegerParcelableAdapter;
 import com.workday.postman.adapter.BooleanParcelableAdapter;
@@ -38,16 +38,16 @@ public class ParcelableAdapterTest {
 
     @Test
     public void testAsParcelable() {
-        assertTrue(AdapterPackage.asParcelable(BigDecimal.TEN) instanceof BigDecimalParcelableAdapter);
-        assertTrue(AdapterPackage.asParcelable(BigInteger.TEN) instanceof BigIntegerParcelableAdapter);
-        assertTrue(AdapterPackage.asParcelable((byte) 5) instanceof ByteParcelableAdapter);
-        assertTrue(AdapterPackage.asParcelable(true) instanceof BooleanParcelableAdapter);
-        assertTrue(AdapterPackage.asParcelable('c') instanceof CharParcelableAdapter);
-        assertTrue(AdapterPackage.asParcelable(2.0) instanceof DoubleParcelableAdapter);
-        assertTrue(AdapterPackage.asParcelable(3.0f) instanceof FloatParcelableAdapter);
-        assertTrue(AdapterPackage.asParcelable(3) instanceof IntParcelableAdapter);
-        assertTrue(AdapterPackage.asParcelable(3L) instanceof LongParcelableAdapter);
-        assertTrue(AdapterPackage.asParcelable((short) 3) instanceof ShortParcelableAdapter);
-        assertTrue(AdapterPackage.asParcelable("r2-d2") instanceof StringParcelableAdapter);
+        assertTrue(ParcelableAdapters.asParcelable(BigDecimal.TEN) instanceof BigDecimalParcelableAdapter);
+        assertTrue(ParcelableAdapters.asParcelable(BigInteger.TEN) instanceof BigIntegerParcelableAdapter);
+        assertTrue(ParcelableAdapters.asParcelable((byte) 5) instanceof ByteParcelableAdapter);
+        assertTrue(ParcelableAdapters.asParcelable(true) instanceof BooleanParcelableAdapter);
+        assertTrue(ParcelableAdapters.asParcelable('c') instanceof CharParcelableAdapter);
+        assertTrue(ParcelableAdapters.asParcelable(2.0) instanceof DoubleParcelableAdapter);
+        assertTrue(ParcelableAdapters.asParcelable(3.0f) instanceof FloatParcelableAdapter);
+        assertTrue(ParcelableAdapters.asParcelable(3) instanceof IntParcelableAdapter);
+        assertTrue(ParcelableAdapters.asParcelable(3L) instanceof LongParcelableAdapter);
+        assertTrue(ParcelableAdapters.asParcelable((short) 3) instanceof ShortParcelableAdapter);
+        assertTrue(ParcelableAdapters.asParcelable("r2-d2") instanceof StringParcelableAdapter);
     }
 }
