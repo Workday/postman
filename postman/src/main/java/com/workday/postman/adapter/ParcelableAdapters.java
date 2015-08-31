@@ -11,7 +11,9 @@ import android.os.Parcelable;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.Locale;
 
 /**
@@ -21,6 +23,23 @@ import java.util.Locale;
 public class ParcelableAdapters {
 
     private ParcelableAdapters() {
+    }
+
+    public static Parcelable[] toParcelableArray(Collection<?> source) {
+        final Parcelable[] target = new Parcelable[source.size()];
+        final Iterator<?> sourceIterator = source.iterator();
+        for (int i = 0; i < source.size(); i++) {
+            target[i] = asParcelable(sourceIterator.next());
+        }
+        return target;
+    }
+
+    public static Object[] unwrapParcelableArray(Parcelable[] wrapped) {
+        final Object[] unwrapped = new Object[wrapped.length];
+        for (int i = 0; i < wrapped.length; i++) {
+            unwrapped[i] = unwrapParcelable(wrapped[i]);
+        }
+        return unwrapped;
     }
 
     public static void toParcelableCollection(Collection<?> source, Collection<Parcelable> target) {
@@ -81,6 +100,10 @@ public class ParcelableAdapters {
         }
         if (o instanceof CharSequence) {
             return new CharSequenceParcelableAdapter((CharSequence) o);
+        }
+
+        if (o instanceof ArrayList) {
+            return new ArrayListParcelableAdapter((ArrayList) o);
         }
 
         final String message = String.format(Locale.US,

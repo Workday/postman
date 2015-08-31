@@ -82,7 +82,6 @@ class ArrayListBundler {
     private static final InnerListBundler<Object> FALLBACK_LIST_BUNDLER =
             new InnerListBundler<Object>() {
 
-
                 @Override
                 public void writeToBundle(ArrayList<Object> list, Bundle bundle, String key) {
                     ArrayList<Parcelable> wrapped = new ArrayList<>(list.size());
@@ -93,6 +92,10 @@ class ArrayListBundler {
                 @Override
                 public ArrayList<Object> readFromBundle(Bundle bundle, String key) {
                     ArrayList<Parcelable> wrapped = bundle.getParcelableArrayList(key);
+                    if (wrapped == null) {
+                        return null;
+                    }
+
                     ArrayList<Object> unwrapped = new ArrayList<>(wrapped.size());
                     for (Parcelable parcelable : wrapped) {
                         unwrapped.add(ParcelableAdapters.unwrapParcelable(parcelable));

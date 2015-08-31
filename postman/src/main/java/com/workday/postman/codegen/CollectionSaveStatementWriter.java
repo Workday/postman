@@ -54,7 +54,8 @@ class CollectionSaveStatementWriter implements SaveStatementWriter {
                                         JavaWriter writer) throws IOException {
         DeclaredType type = (DeclaredType) field.asType();
         TypeMirror itemType = type.getTypeArguments().get(0);
-        validateTypeArugment(itemType, field);
+        TypeMirror itemTypeErasure = processingEnv.getTypeUtils().erasure(itemType);
+//        validateTypeArugment(itemType, field);
 
         String collectionInitializer;
         try {
@@ -66,10 +67,11 @@ class CollectionSaveStatementWriter implements SaveStatementWriter {
         writer.beginControlFlow("if (bundle.containsKey(\"%s\"))", field.getSimpleName());
         writer.emitStatement("object.%s = %s", field.getSimpleName(), collectionInitializer);
         writer.emitStatement(
-                "%1$s.readCollectionFromBundle(object.%2$s, bundle, %3$s.class, \"%2$s\")",
+                "%1$s.readCollectionFromBundle(object.%2$s, bundle, %3$s.class, "
+                        + "\"%2$s\")",
                 CollectionBundler.class.getCanonicalName(),
                 field.getSimpleName(),
-                itemType);
+                itemTypeErasure);
 
         writePostCreateChildMethodCalls(field, itemType, postCreateChildMethods, writer);
         writer.endControlFlow();
@@ -80,14 +82,17 @@ class CollectionSaveStatementWriter implements SaveStatementWriter {
             throws IOException {
         DeclaredType type = (DeclaredType) field.asType();
         TypeMirror itemType = type.getTypeArguments().get(0);
-        validateTypeArugment(itemType, field);
+        TypeMirror itemTypeErasure = processingEnv.getTypeUtils().erasure(itemType);
+
+//        validateTypeArugment(itemType, field);
 
         writer.beginControlFlow("if (object.%s != null)", field.getSimpleName());
         writer.emitStatement(
-                "%1$s.writeCollectionToBundle(object.%2$s, bundle, %3$s.class, \"%2$s\")",
+                "%1$s.writeCollectionToBundle(object.%2$s, bundle, %3$s.class, "
+                        + "\"%2$s\")",
                 CollectionBundler.class.getCanonicalName(),
                 field.getSimpleName(),
-                itemType);
+                itemTypeErasure);
         writer.endControlFlow();
     }
 

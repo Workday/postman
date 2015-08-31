@@ -59,8 +59,8 @@ class MapSaveStatementWriter implements SaveStatementWriter {
         TypeMirror keyType = typeArguments.get(0);
         TypeMirror valueType = typeArguments.get(1);
 
-        validateTypeArugment(keyType, field);
-        validateTypeArugment(valueType, field);
+//        validateTypeArugment(keyType, field);
+//        validateTypeArugment(valueType, field);
         try {
             writer.emitStatement("object.%s = %s", field.getSimpleName(),
                                  initializers.findMapInitializer(type));
@@ -107,8 +107,8 @@ class MapSaveStatementWriter implements SaveStatementWriter {
         TypeMirror keyType = typeArguments.get(0);
         TypeMirror valueType = typeArguments.get(1);
 
-        validateTypeArugment(keyType, field);
-        validateTypeArugment(valueType, field);
+//        validateTypeArugment(keyType, field);
+//        validateTypeArugment(valueType, field);
         writer.beginControlFlow("if (object.%s != null)", field.getSimpleName());
         writer.emitStatement(
                 "%1$s.writeMapToBundle(object.%2$s, bundle, %3$s.class, %4$s.class, \"%2$s\")",

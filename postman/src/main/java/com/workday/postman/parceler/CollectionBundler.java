@@ -21,20 +21,22 @@ public class CollectionBundler {
     private CollectionBundler() {
     }
 
-    public static <T> void writeCollectionToBundle(Collection<T> collection,
+    @SuppressWarnings("unchecked")
+    public static void writeCollectionToBundle(Collection collection,
                                                    Bundle bundle,
-                                                   Class<T> itemClass,
+                                                   Class itemClass,
                                                    String key) {
 
-        ArrayList<T> arrayList = collection instanceof ArrayList
-                                 ? (ArrayList<T>) collection
-                                 : new ArrayList<>(collection);
+        ArrayList arrayList = collection instanceof ArrayList
+                                 ? (ArrayList) collection
+                                 : new ArrayList(collection);
         ArrayListBundler.writeArrayListToBundle(arrayList, bundle, itemClass, key);
     }
 
-    public static <T> void readCollectionFromBundle(Collection<T> collection,
+    @SuppressWarnings("unchecked")
+    public static void readCollectionFromBundle(Collection collection,
                                                     Bundle bundle,
-                                                    Class<T> itemClass,
+                                                    Class itemClass,
                                                     String key) {
 
         collection.addAll(ArrayListBundler.readArrayListFromBundle(bundle, itemClass, key));
