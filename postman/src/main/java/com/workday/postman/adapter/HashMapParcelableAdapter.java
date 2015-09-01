@@ -7,45 +7,28 @@
 
 package com.workday.postman.adapter;
 
-import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
 
 /**
  * @author nathan.taylor
  * @since 2015-08-28.
  */
-public class HashMapParcelableAdapter implements ParcelableAdapter<HashMap> {
+public class HashMapParcelableAdapter extends AbstractMapParcelableAdapter<HashMap> {
 
-    public static final Creator<HashMapParcelableAdapter> CREATOR =
-            new Creator<HashMapParcelableAdapter>() {
+    public static final Parcelable.Creator<HashMapParcelableAdapter> CREATOR =
+            new Creator<HashMap, HashMapParcelableAdapter>() {
 
 
                 @Override
-                public HashMapParcelableAdapter createFromParcel(Parcel source) {
-                    final Parcelable[] keys =
-                            source.readParcelableArray(ParcelableAdapter.class.getClassLoader());
-                    final Parcelable[] values =
-                            source.readParcelableArray(ParcelableAdapter.class.getClassLoader());
-                    if (keys.length != values.length) {
-                        final String message = String.format(Locale.US,
-                                                             "Length of keys array (%d) does not "
-                                                                     + "match length of values "
-                                                                     + "array (%d)",
-                                                             keys.length,
-                                                             values.length);
-                        throw new IllegalStateException(message);
-                    }
+                protected HashMap newMapInstance() {
+                    return new HashMap();
+                }
 
-                    final HashMap<Object, Object> map = new HashMap<>();
-                    for (int i = 0; i < keys.length; i++) {
-                        final Object key = ParcelableAdapters.unwrapParcelable(keys[i]);
-                        final Object value = ParcelableAdapters.unwrapParcelable(values[i]);
-                        map.put(key, value);
-                    }
+                @Override
+                protected HashMapParcelableAdapter newParcelableAdapterInstance(
+                        HashMap map) {
                     return new HashMapParcelableAdapter(map);
                 }
 
@@ -55,34 +38,8 @@ public class HashMapParcelableAdapter implements ParcelableAdapter<HashMap> {
                 }
             };
 
-    private HashMap<Object, Object> value;
-
     public HashMapParcelableAdapter(HashMap value) {
-        this.value = value;
+        super(value);
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        final Parcelable[] keys = new Parcelable[value.size()];
-        final Parcelable[] values = new Parcelable[value.size()];
-
-        int i = 0;
-        for (Map.Entry entry : value.entrySet()) {
-            keys[i] = ParcelableAdapters.asParcelable(entry.getKey());
-            values[i] = ParcelableAdapters.asParcelable(entry.getValue());
-        }
-
-        dest.writeParcelableArray(keys, flags);
-        dest.writeParcelableArray(values, flags);
-    }
-
-    @Override
-    public HashMap getValue() {
-        return value;
-    }
 }

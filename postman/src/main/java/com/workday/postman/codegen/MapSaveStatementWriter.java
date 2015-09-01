@@ -19,7 +19,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.processing.ProcessingEnvironment;
-import javax.lang.model.element.Element;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.VariableElement;
 import javax.lang.model.type.DeclaredType;
@@ -35,14 +34,12 @@ class MapSaveStatementWriter implements SaveStatementWriter {
     private final MetaTypes metaTypes;
     private final ProcessingEnvironment processingEnv;
     private final Initializers initializers;
-    private final CollectionItemTypeValidator itemTypeValidator;
 
     MapSaveStatementWriter(ParcelerGenerator parcelerGenerator) {
         this.metaTypes = parcelerGenerator.metaTypes;
         this.processingEnv = parcelerGenerator.processingEnv;
 
         initializers = new Initializers(metaTypes);
-        itemTypeValidator = new CollectionItemTypeValidator(processingEnv);
     }
 
     @Override
@@ -59,8 +56,6 @@ class MapSaveStatementWriter implements SaveStatementWriter {
         TypeMirror keyType = typeArguments.get(0);
         TypeMirror valueType = typeArguments.get(1);
 
-//        validateTypeArugment(keyType, field);
-//        validateTypeArugment(valueType, field);
         try {
             writer.emitStatement("object.%s = %s", field.getSimpleName(),
                                  initializers.findMapInitializer(type));
@@ -107,8 +102,6 @@ class MapSaveStatementWriter implements SaveStatementWriter {
         TypeMirror keyType = typeArguments.get(0);
         TypeMirror valueType = typeArguments.get(1);
 
-//        validateTypeArugment(keyType, field);
-//        validateTypeArugment(valueType, field);
         writer.beginControlFlow("if (object.%s != null)", field.getSimpleName());
         writer.emitStatement(
                 "%1$s.writeMapToBundle(object.%2$s, bundle, %3$s.class, %4$s.class, \"%2$s\")",
@@ -119,10 +112,4 @@ class MapSaveStatementWriter implements SaveStatementWriter {
         writer.endControlFlow();
     }
 
-    private void validateTypeArugment(TypeMirror typeArgument, Element offendingElement) {
-        itemTypeValidator.validateTypeArgument(typeArgument,
-                                               offendingElement,
-                                               "Postman cannot handle Maps containing keys or "
-                                                       + "values of type " + typeArgument);
-    }
 }

@@ -54,7 +54,7 @@ public class MyParcelableTest {
         in.myStringMap.put("one key", "one value");
         in.myStringMap.put("two key", "two value");
 
-        MyParcelable out = ParcelUtils.writeAndReadParcelable(in);
+        MyParcelable out = ParcelTestUtils.writeAndReadParcelable(in);
 
         assertEquals(5, out.myInt);
         assertEquals("Andy", out.myCharSequence);
@@ -81,7 +81,7 @@ public class MyParcelableTest {
         ArrayList<String> stringList = CollectionUtils.newArrayList("one", "two");
         in.myStringList = stringList;
 
-        MyParcelable out = ParcelUtils.writeAndReadParcelable(in);
+        MyParcelable out = ParcelTestUtils.writeAndReadParcelable(in);
 
         assertEquals(stringList, out.myStringList);
     }
@@ -93,7 +93,7 @@ public class MyParcelableTest {
                 "one", "two");
         in.myCharSequenceList = charSequenceList;
 
-        MyParcelable out = ParcelUtils.writeAndReadParcelable(in);
+        MyParcelable out = ParcelTestUtils.writeAndReadParcelable(in);
 
         assertEquals(charSequenceList, out.myCharSequenceList);
     }
@@ -104,7 +104,7 @@ public class MyParcelableTest {
         Set<Integer> set = CollectionUtils.newHashSet(1, 2, 3);
         in.myIntegerSet = set;
 
-        MyParcelable out = ParcelUtils.writeAndReadParcelable(in);
+        MyParcelable out = ParcelTestUtils.writeAndReadParcelable(in);
 
         assertEquals(set, out.myIntegerSet);
     }
@@ -115,7 +115,7 @@ public class MyParcelableTest {
         MyParcelable in = new MyParcelable();
         in.mySerializable = new MySerializable();
 
-        MyParcelable out = ParcelUtils.writeAndReadParcelable(in);
+        MyParcelable out = ParcelTestUtils.writeAndReadParcelable(in);
 
         assertNotNull(out.mySerializable);
     }
@@ -127,7 +127,7 @@ public class MyParcelableTest {
         in.myEnum2 = MyEnum.VALUE_2;
         in.myEnum3 = null;
 
-        MyParcelableWithEnums out = ParcelUtils.writeAndReadParcelable(in);
+        MyParcelableWithEnums out = ParcelTestUtils.writeAndReadParcelable(in);
 
         assertEquals(MyEnum.VALUE_1, out.myEnum1);
         assertEquals(MyEnum.VALUE_2, out.myEnum2);
@@ -160,7 +160,7 @@ public class MyParcelableTest {
         in.myMap.put(new MyChildParcelable("key", false), new MyChildParcelable("value", false));
         in.string = "string";
 
-        MyParcelableWithPostCreateAction out = ParcelUtils.writeAndReadParcelable(in);
+        MyParcelableWithPostCreateAction out = ParcelTestUtils.writeAndReadParcelable(in);
         assertEquals("child seen", out.myChildParcelable.aString);
         assertEquals("list child seen", out.myChildren.get(0).aString);
         assertNotNull(out.mySerializable);
@@ -173,6 +173,6 @@ public class MyParcelableTest {
 
     private <T extends Parcelable> T writeAndReadParcelable(Parcelable in) {
 
-        return ParcelUtils.writeAndReadParcelable(in);
+        return ParcelTestUtils.writeAndReadParcelable(in);
     }
 }

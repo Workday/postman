@@ -64,33 +64,6 @@ public class MapBundlerTest {
     }
 
     @Test
-    @Ignore
-    public void testUnhandledTypeThrowsIllegalArgumentException() {
-        Map<Object, String> map = new HashMap<>();
-        map.put(new Object(), "value1");
-
-        boolean writeThrewException = false;
-        Bundle bundle = new Bundle();
-        try {
-            MapBundler.writeMapToBundle(map, bundle, Object.class, String.class, BUNDLE_KEY);
-        } catch (IllegalArgumentException e) {
-            writeThrewException = true;
-        }
-        assertTrue("MapBundler.writeMapToBundle throws IllegalArgumentException",
-                   writeThrewException);
-
-        map.clear();
-        boolean readThrewException = false;
-        try {
-            MapBundler.readMapFromBundle(map, bundle, Object.class, String.class, BUNDLE_KEY);
-        } catch (IllegalArgumentException e) {
-            readThrewException = true;
-        }
-        assertTrue("MapBundler.readMapFromBundle throws IllegalArgumentException",
-                   readThrewException);
-    }
-
-    @Test
     public void testIntParcelableMap() {
         Map<Integer, MyParcelable> map = new HashMap<>();
         MyParcelable value1 = new MyParcelable();

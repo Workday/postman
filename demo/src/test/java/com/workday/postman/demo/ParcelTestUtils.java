@@ -12,8 +12,9 @@ import android.os.Parcelable;
 
 import org.robolectric.RuntimeEnvironment;
 
-public class ParcelUtils {
-    public ParcelUtils() {
+public class ParcelTestUtils {
+
+    public ParcelTestUtils() {
     }
 
     public static <T extends Parcelable> T writeAndReadParcelable(Parcelable in) {
