@@ -144,6 +144,23 @@ No problem. In that case, instead of annotating the class with `@Parceled`, anno
 * Postman cannot populate final fields. If you annotate a final field with `@Parceled`, Postman will generate a compilation error. A final field in a class annotated with `@Parceled` will generate a compiler warning.
 * Postman requires a public or package-private, no arg constructor in order to instantiate the class. A class marked with `@Parceled` that does not have default constructor will generate a compilation error.
 
+### Types Postman Can Handle
+
+Postman can write to the Parcel any of the following types.
+
+* All primitives (e.g. `int`, `boolean`) as well as their boxed counterparts (e.g. [Integer](http://developer.android.com/reference/java/lang/Integer.html), [Boolean](http://developer.android.com/reference/java/lang/Boolean.html)).
+* [BigDecimal](http://developer.android.com/reference/java/math/BigDecimal.html) and [BigInteger](http://developer.android.com/reference/java/math/BigInteger.html)
+* Any class that implements Parcelable.
+* String and [CharSequence](http://developer.android.com/reference/java/lang/CharSequence.html)
+* Any class that implements [Serializable](http://developer.android.com/reference/java/io/Serializable.html)
+* The following Collections, so long as they only contain items enumerated in this list (this includes `List<List<String>>`)
+    * [ArrayList](http://developer.android.com/reference/java/util/ArrayList.html), [LinkedList](http://developer.android.com/reference/java/util/LinkedList.html)
+    * [HashSet](http://developer.android.com/reference/java/util/HashSet.html), [LinkedHashSet](http://developer.android.com/reference/java/util/LinkedHashSet.html), [TreeSet](http://developer.android.com/reference/java/util/TreeSet.html)
+* The following Maps so long as they only contain keys and values enumerated in this list (this include `Map<String, List<String>>`)
+    * [HashMap](http://developer.android.com/reference/java/util/HashMap.html), [LinkedHashMap](http://developer.android.com/reference/java/util/LinkedHashMap.html)
+
+Note that Postman will compile if it encounters a `List<Object>` or a `Map<String, Object>`, but if one of the items is not of a type that Postman can handle, it will throw a runtime exception when it tries to write the object to the parcel.
+
 ### Working with Proguard
 
 If you're using [ProGuard](http://proguard.sourceforge.net/), you must add the following line to your ProGuard rules
