@@ -171,8 +171,4 @@ public class MyParcelableTest {
         assertEquals("string", out.string);
     }
 
-    private <T extends Parcelable> T writeAndReadParcelable(Parcelable in) {
-
-        return ParcelTestUtils.writeAndReadParcelable(in);
-    }
 }
