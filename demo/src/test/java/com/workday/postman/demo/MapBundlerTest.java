@@ -17,6 +17,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -61,32 +63,6 @@ public class MapBundlerTest {
     }
 
     @Test
-    public void testUnhandledTypeThrowsIllegalArgumentException() {
-        Map<Object, String> map = new HashMap<>();
-        map.put(new Object(), "value1");
-
-        boolean writeThrewException = false;
-        Bundle bundle = new Bundle();
-        try {
-            MapBundler.writeMapToBundle(map, bundle, Object.class, String.class, BUNDLE_KEY);
-        } catch (IllegalArgumentException e) {
-            writeThrewException = true;
-        }
-        assertTrue("MapBundler.writeMapToBundle throws IllegalArgumentException",
-                   writeThrewException);
-
-        map.clear();
-        boolean readThrewException = false;
-        try {
-            MapBundler.readMapFromBundle(map, bundle, Object.class, String.class, BUNDLE_KEY);
-        } catch (IllegalArgumentException e) {
-            readThrewException = true;
-        }
-        assertTrue("MapBundler.readMapFromBundle throws IllegalArgumentException",
-                   readThrewException);
-    }
-
-    @Test
     public void testIntParcelableMap() {
         Map<Integer, MyParcelable> map = new HashMap<>();
         MyParcelable value1 = new MyParcelable();
@@ -101,6 +77,27 @@ public class MapBundlerTest {
         MapBundler.readMapFromBundle(map, bundle, Integer.class, MyParcelable.class, BUNDLE_KEY);
         Assert.assertEquals(value1, map.get(1));
         Assert.assertEquals(value2, map.get(2));
+    }
+
+    @Test
+    public void testStringObjectMap() {
+        Map<String, Object> map = new HashMap<>();
+        BigInteger value1 = new BigInteger("5");
+        BigDecimal value2 = new BigDecimal("2.5");
+        MyParcelable value3 = new MyParcelable();
+
+        map.put("v1", value1);
+        map.put("v2", value2);
+        map.put("v3", value3);
+
+        Bundle bundle = new Bundle();
+        MapBundler.writeMapToBundle(map, bundle, String.class, Object.class, BUNDLE_KEY);
+
+        map.clear();
+        MapBundler.readMapFromBundle(map, bundle, String.class, Object.class, BUNDLE_KEY);
+        assertEquals(value1, map.get("v1"));
+        assertEquals(value2, map.get("v2"));
+        assertEquals(value3, map.get("v3"));
     }
 
 }

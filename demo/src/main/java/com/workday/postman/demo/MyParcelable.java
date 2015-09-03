@@ -26,6 +26,12 @@ public class MyParcelable implements Parcelable {
 
     public static final Creator<MyParcelable> CREATOR = Postman.getCreator(MyParcelable.class);
 
+    public MyParcelable() {}
+
+    public MyParcelable(String myString) {
+        this.myString = myString;
+    }
+
     @Override
     public int describeContents() {
         return 0;

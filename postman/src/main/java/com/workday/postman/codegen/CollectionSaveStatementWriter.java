@@ -17,7 +17,6 @@ import java.io.IOException;
 import java.util.Collection;
 
 import javax.annotation.processing.ProcessingEnvironment;
-import javax.lang.model.element.Element;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.VariableElement;
 import javax.lang.model.type.DeclaredType;
@@ -33,14 +32,12 @@ class CollectionSaveStatementWriter implements SaveStatementWriter {
     private final MetaTypes metaTypes;
     private final ProcessingEnvironment processingEnv;
     private final Initializers initializers;
-    private final CollectionItemTypeValidator itemTypeValidator;
 
     CollectionSaveStatementWriter(ParcelerGenerator parcelerGenerator) {
         this.metaTypes = parcelerGenerator.metaTypes;
         this.processingEnv = parcelerGenerator.processingEnv;
 
         initializers = new Initializers(metaTypes);
-        itemTypeValidator = new CollectionItemTypeValidator(processingEnv);
     }
 
     @Override
@@ -54,7 +51,7 @@ class CollectionSaveStatementWriter implements SaveStatementWriter {
                                         JavaWriter writer) throws IOException {
         DeclaredType type = (DeclaredType) field.asType();
         TypeMirror itemType = type.getTypeArguments().get(0);
-        validateTypeArugment(itemType, field);
+        TypeMirror itemTypeErasure = processingEnv.getTypeUtils().erasure(itemType);
 
         String collectionInitializer;
         try {
@@ -69,7 +66,7 @@ class CollectionSaveStatementWriter implements SaveStatementWriter {
                 "%1$s.readCollectionFromBundle(object.%2$s, bundle, %3$s.class, \"%2$s\")",
                 CollectionBundler.class.getCanonicalName(),
                 field.getSimpleName(),
-                itemType);
+                itemTypeErasure);
 
         writePostCreateChildMethodCalls(field, itemType, postCreateChildMethods, writer);
         writer.endControlFlow();
@@ -80,14 +77,14 @@ class CollectionSaveStatementWriter implements SaveStatementWriter {
             throws IOException {
         DeclaredType type = (DeclaredType) field.asType();
         TypeMirror itemType = type.getTypeArguments().get(0);
-        validateTypeArugment(itemType, field);
+        TypeMirror itemTypeErasure = processingEnv.getTypeUtils().erasure(itemType);
 
         writer.beginControlFlow("if (object.%s != null)", field.getSimpleName());
         writer.emitStatement(
                 "%1$s.writeCollectionToBundle(object.%2$s, bundle, %3$s.class, \"%2$s\")",
                 CollectionBundler.class.getCanonicalName(),
                 field.getSimpleName(),
-                itemType);
+                itemTypeErasure);
         writer.endControlFlow();
     }
 
@@ -106,10 +103,4 @@ class CollectionSaveStatementWriter implements SaveStatementWriter {
         }
     }
 
-    private void validateTypeArugment(TypeMirror typeArgument, Element offendingElement) {
-        itemTypeValidator.validateTypeArgument(typeArgument,
-                                               offendingElement,
-                                               "Postman cannot handle Collections containing "
-                                                       + "items of type " + typeArgument);
-    }
 }

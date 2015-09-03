@@ -32,8 +32,6 @@
         <!-- See http://checkstyle.sf.net/config_javadoc.html -->
         <module name="JavadocStyle"/>
         <module name="NonEmptyAtclauseDescription"/>
-        <module name="JavadocTagContinuationIndentation"/>
-
 
         <!-- Checks for Naming Conventions.                  -->
         <!-- See http://checkstyle.sf.net/config_naming.html -->
