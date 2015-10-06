@@ -46,7 +46,7 @@ afterEvaluate { project ->
                 beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
 
                 pom.groupId = GROUP
-                pom.artifactId = project.ext.artifactId
+                pom.artifactId = POM_ARTIFACT_ID
                 pom.version = VERSION_NAME
 
                 repository(url: getReleaseRepositoryUrl()) {
@@ -57,7 +57,7 @@ afterEvaluate { project ->
                 }
 
                 pom.project {
-                    name project.ext.artifactName
+                    name POM_NAME
                     packaging POM_PACKAGING
                     description POM_DESCRIPTION
                     url POM_URL

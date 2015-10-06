@@ -12,8 +12,6 @@ repositories {
 
 group = GROUP
 version = VERSION_NAME
-ext.artifactId = POM_ARTIFACT_ID_PROCESSOR
-ext.artifactName = POM_NAME_PROCESSOR
 
 configurations {
     provided
