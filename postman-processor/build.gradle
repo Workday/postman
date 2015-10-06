@@ -12,8 +12,8 @@ repositories {
 
 group = GROUP
 version = VERSION_NAME
-ext.artifactId = POM_ARTIFACT_ID_CORE
-ext.artifactName = POM_NAME_CORE
+ext.artifactId = POM_ARTIFACT_ID_PROCESSOR
+ext.artifactName = POM_NAME_PROCESSOR
 
 configurations {
     provided
@@ -39,5 +39,7 @@ checkstyle {
 
 dependencies {
     provided 'com.google.android:android:2.3.1'
+    compile project(':postman')
+    compile 'com.squareup:javawriter:2.5.1'
     compile 'com.workday:metajava:1.0'
 }

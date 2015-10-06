@@ -9,6 +9,7 @@ package com.workday.postman.codegen;
 
 import com.squareup.javawriter.JavaWriter;
 import com.workday.meta.MetaTypes;
+import com.workday.postman.util.Names;
 
 import java.io.IOException;
 import java.util.Collection;

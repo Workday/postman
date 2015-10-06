@@ -12,6 +12,7 @@ import com.workday.meta.MetaTypeNames;
 import com.workday.meta.MetaTypes;
 import com.workday.meta.Modifiers;
 import com.workday.postman.parceler.Parceler;
+import com.workday.postman.util.Names;
 
 import java.io.IOException;
 import java.util.ArrayList;

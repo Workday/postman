@@ -5,7 +5,7 @@
  * Please see the LICENSE.txt file in this project.
  */
 
-package com.workday.postman.codegen;
+package com.workday.postman.util;
 
 import com.workday.postman.parceler.Parceler;
 

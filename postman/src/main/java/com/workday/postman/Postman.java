@@ -13,7 +13,7 @@ import android.os.Parcelable.Creator;
 
 import com.workday.meta.ConcreteTypeNames;
 import com.workday.postman.annotations.Parceled;
-import com.workday.postman.codegen.Names;
+import com.workday.postman.util.Names;
 import com.workday.postman.parceler.Parceler;
 
 import java.util.HashMap;
