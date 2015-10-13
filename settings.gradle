@@ -1,1 +1,1 @@
-include ':postman', ':demo'
+include ':postman', ':postman-processor', ':demo'

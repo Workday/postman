@@ -12,6 +12,7 @@ import com.workday.meta.Initializers;
 import com.workday.meta.InvalidTypeException;
 import com.workday.meta.MetaTypes;
 import com.workday.postman.parceler.CollectionBundler;
+import com.workday.postman.util.Names;
 
 import java.io.IOException;
 import java.util.Collection;
