@@ -1,7 +1,7 @@
 apply plugin: 'java'
-apply plugin: 'idea'
-apply plugin: 'checkstyle'
+apply from: file('../gradle/checkstyle.gradle')
 apply from: file('../gradle/gradle-mvn-push.gradle')
+apply from: file('../gradle/provided-configuration.gradle')
 
 sourceCompatibility = JavaVersion.VERSION_1_7
 targetCompatibility = JavaVersion.VERSION_1_7
@@ -12,28 +12,6 @@ repositories {
 
 group = GROUP
 version = VERSION_NAME
-
-configurations {
-    provided
-}
-
-sourceSets {
-    main.compileClasspath += configurations.provided
-    test.compileClasspath += configurations.provided
-    test.runtimeClasspath += configurations.provided
-}
-javadoc.classpath += configurations.provided
-
-idea {
-    module {
-        scopes.PROVIDED.plus += [configurations.provided]
-    }
-}
-
-checkstyle {
-    configFile = new File(rootDir, 'checkstyle.xml')
-    toolVersion = '6.7'
-}
 
 dependencies {
     provided 'com.google.android:android:2.3.1'
