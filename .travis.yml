@@ -2,7 +2,7 @@ language: android
 
 android:
   components:
-    - android-19
-    - build-tools-19.1.0
+    - android-23
+    - build-tools-23.0.1
 
 script: ./gradlew assemble check
