@@ -2,6 +2,10 @@
 
 Postman is a java library that uses code generation to handle the details of implementing the [Parcelable](http://developer.android.com/reference/android/os/Parcelable.html) interface on Android.
 
+__Latest Version:__ [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.workday/postman/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.workday/postman)
+
+__Build Status:__ [![Build Status](https://travis-ci.org/Workday/postman.svg?branch=master)](https://travis-ci.org/Workday/postman)
+
 ## The Problem
 
 Postman is intended to be used in cases where you have parcelable classes with a lot of fields that need to be serialized. At Workday, we had a lot of classes like the following to represent the responses from server.
@@ -88,7 +92,7 @@ That's all you need to do get Postman working!
 
 ## How to Use Postman
 
-Add the following lines to your `build.gradle`
+Add the following lines to your `build.gradle` file, replacing `$postman_version` with latest version from Maven Central.
 
 ```
 repositories {
@@ -96,8 +100,15 @@ repositories {
 }
 
 dependencies {
-    compile 'com.workday:postman:1.1'
+    compile "com.workday:postman:$postman_version"
+    compile "com.workday:postman-processor:$postman_version"
 }
+```
+
+Note that if you use the [android-apt plugin](https://bitbucket.org/hvisser/android-apt) or the [kotlin-android plugin](https://kotlinlang.org/docs/reference/using-gradle.html), you may use `apt` or `kapt` respectively instead of `compile` for `postman-processor`, e.g.
+
+```
+apt "com.workday:postman-processor:$postman_version"
 ```
 
 ### Postman Idioms
