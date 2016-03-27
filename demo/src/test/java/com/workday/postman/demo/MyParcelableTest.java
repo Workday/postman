@@ -8,12 +8,9 @@
 package com.workday.postman.demo;
 
 import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.workday.postman.Postman;
 import com.workday.postman.PostmanException;
 import com.workday.postman.util.CollectionUtils;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
@@ -89,8 +86,7 @@ public class MyParcelableTest {
     @Test
     public void testCharSequenceArrayList() {
         MyParcelable in = new MyParcelable();
-        ArrayList<CharSequence> charSequenceList = CollectionUtils.<CharSequence>newArrayList(
-                "one", "two");
+        ArrayList<CharSequence> charSequenceList = CollectionUtils.<CharSequence>newArrayList("one", "two");
         in.myCharSequenceList = charSequenceList;
 
         MyParcelable out = ParcelTestUtils.writeAndReadParcelable(in);
@@ -135,6 +131,21 @@ public class MyParcelableTest {
     }
 
     @Test
+    public void testEnumLists() {
+        MyParcelableWithEnumLists in = new MyParcelableWithEnumLists();
+        in.myEnums.add(MyEnum.VALUE_1);
+        in.myEnums.add(MyEnum.VALUE_2);
+        in.myEnums.add(null);
+
+        MyParcelableWithEnumLists out = ParcelTestUtils.writeAndReadParcelable(in);
+
+        assertNotNull(out.myEnums);
+        assertEquals(MyEnum.VALUE_1, out.myEnums.get(0));
+        assertEquals(MyEnum.VALUE_2, out.myEnums.get(1));
+        assertEquals(null, out.myEnums.get(2));
+    }
+
+    @Test
     public void testNonParceledClassThrowsPostmanException() {
         Object o = new Object();
 
@@ -143,8 +154,9 @@ public class MyParcelableTest {
             Postman.writeToParcel(o, Parcel.obtain());
         } catch (PostmanException e) {
             exceptionCaught = true;
-            assertTrue("expected cause to be of type ClassNotFoundException but found " +
-                               e.getCause().getClass().getCanonicalName(),
+            assertTrue("expected cause to be of type ClassNotFoundException but found " + e.getCause()
+                                                                                           .getClass()
+                                                                                           .getCanonicalName(),
                        e.getCause() instanceof ClassNotFoundException);
         }
         assertTrue(exceptionCaught);
@@ -164,8 +176,7 @@ public class MyParcelableTest {
         assertEquals("child seen", out.myChildParcelable.aString);
         assertEquals("list child seen", out.myChildren.get(0).aString);
         assertNotNull(out.mySerializable);
-        Map.Entry<MyChildParcelable, MyChildParcelable> entry =
-                out.myMap.entrySet().iterator().next();
+        Map.Entry<MyChildParcelable, MyChildParcelable> entry = out.myMap.entrySet().iterator().next();
         assertEquals("key seen", entry.getKey().aString);
         assertEquals("value seen", entry.getValue().aString);
         assertEquals("string", out.string);
