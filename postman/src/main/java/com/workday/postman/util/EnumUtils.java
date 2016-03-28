@@ -8,6 +8,9 @@ import java.util.ArrayList;
  */
 public class EnumUtils {
 
+    private EnumUtils() {
+    }
+
     public static <E> ArrayList<Integer> enumArrayListToOrdinalArrayList(ArrayList<E> enumArrayList) {
         Preconditions.checkArgument(!enumArrayList.isEmpty(), "Enum list cannot be empty");
         final ArrayList<Integer> ordinalArrayList = new ArrayList<>(enumArrayList.size());

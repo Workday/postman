@@ -9,6 +9,7 @@ package com.workday.postman.parceler;
 
 import android.os.Bundle;
 import android.os.Parcelable;
+
 import com.workday.postman.adapter.ParcelableAdapters;
 import com.workday.postman.util.EnumUtils;
 
