@@ -134,15 +134,15 @@ public class MyParcelableTest {
     public void testEnumLists() {
         MyParcelableWithEnumLists in = new MyParcelableWithEnumLists();
         in.myEnums.add(MyEnum.VALUE_1);
+        in.myEnums.add(MyEnum.VALUE_3);
         in.myEnums.add(MyEnum.VALUE_2);
-        in.myEnums.add(null);
 
         MyParcelableWithEnumLists out = ParcelTestUtils.writeAndReadParcelable(in);
 
         assertNotNull(out.myEnums);
         assertEquals(MyEnum.VALUE_1, out.myEnums.get(0));
-        assertEquals(MyEnum.VALUE_2, out.myEnums.get(1));
-        assertEquals(null, out.myEnums.get(2));
+        assertEquals(MyEnum.VALUE_3, out.myEnums.get(1));
+        assertEquals(MyEnum.VALUE_2, out.myEnums.get(2));
     }
 
     @Test

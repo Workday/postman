@@ -21,13 +21,14 @@ public class EnumUtils {
                                                                    ArrayList<Integer> ordinalArrayList) {
         Preconditions.checkArgument(!ordinalArrayList.isEmpty(), "Ordinal list cannot be empty");
         final ArrayList<E> enumArrayList = new ArrayList<>(ordinalArrayList.size());
-        for (int i = 0; i < enumArrayList.size(); i++) {
+        for (int i = 0; i < ordinalArrayList.size(); i++) {
             enumArrayList.add(getEnumForOrdinal(enumClass, ordinalArrayList.get(i)));
         }
         return enumArrayList;
     }
 
     private static <E> E getEnumForOrdinal(Class<E> enumClass, int ordinal) {
-        return enumClass.getEnumConstants()[ordinal];
+        E e = enumClass.getEnumConstants()[ordinal];
+        return e;
     }
 }
