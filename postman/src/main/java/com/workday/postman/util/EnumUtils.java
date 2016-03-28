@@ -11,7 +11,8 @@ public class EnumUtils {
     private EnumUtils() {
     }
 
-    public static <E> ArrayList<Integer> enumArrayListToOrdinalArrayList(ArrayList<E> enumArrayList) {
+    public static <E> ArrayList<Integer> enumArrayListToOrdinalArrayList(ArrayList<E>
+                                                                                 enumArrayList) {
         Preconditions.checkArgument(!enumArrayList.isEmpty(), "Enum list cannot be empty");
         final ArrayList<Integer> ordinalArrayList = new ArrayList<>(enumArrayList.size());
         for (int i = 0; i < enumArrayList.size(); i++) {
@@ -21,7 +22,8 @@ public class EnumUtils {
     }
 
     public static <E> ArrayList<E> ordinalArrayListToEnumArrayList(Class<E> enumClass,
-                                                                   ArrayList<Integer> ordinalArrayList) {
+                                                                   ArrayList<Integer>
+                                                                           ordinalArrayList) {
         Preconditions.checkArgument(!ordinalArrayList.isEmpty(), "Ordinal list cannot be empty");
         final ArrayList<E> enumArrayList = new ArrayList<>(ordinalArrayList.size());
         for (int i = 0; i < ordinalArrayList.size(); i++) {
@@ -31,7 +33,6 @@ public class EnumUtils {
     }
 
     private static <E> E getEnumForOrdinal(Class<E> enumClass, int ordinal) {
-        E e = enumClass.getEnumConstants()[ordinal];
-        return e;
+        return enumClass.getEnumConstants()[ordinal];
     }
 }

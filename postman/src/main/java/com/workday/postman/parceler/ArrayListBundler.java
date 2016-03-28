@@ -24,31 +24,33 @@ class ArrayListBundler {
     private ArrayListBundler() {
     }
 
-    private static final InnerListBundler<Integer> INTEGER_LIST_BUNDLER = new InnerListBundler<Integer>() {
+    private static final InnerListBundler<Integer> INTEGER_LIST_BUNDLER =
+            new InnerListBundler<Integer>() {
 
-        @Override
-        public void writeToBundle(ArrayList<Integer> list, Bundle bundle, String key) {
-            bundle.putIntegerArrayList(key, list);
-        }
+                @Override
+                public void writeToBundle(ArrayList<Integer> list, Bundle bundle, String key) {
+                    bundle.putIntegerArrayList(key, list);
+                }
 
-        @Override
-        public ArrayList<Integer> readFromBundle(Bundle bundle, String key) {
-            return bundle.getIntegerArrayList(key);
-        }
-    };
+                @Override
+                public ArrayList<Integer> readFromBundle(Bundle bundle, String key) {
+                    return bundle.getIntegerArrayList(key);
+                }
+            };
 
-    private static final InnerListBundler<String> STRING_LIST_BUNDLER = new InnerListBundler<String>() {
+    private static final InnerListBundler<String> STRING_LIST_BUNDLER =
+            new InnerListBundler<String>() {
 
-        @Override
-        public void writeToBundle(ArrayList<String> list, Bundle bundle, String key) {
-            bundle.putStringArrayList(key, list);
-        }
+                @Override
+                public void writeToBundle(ArrayList<String> list, Bundle bundle, String key) {
+                    bundle.putStringArrayList(key, list);
+                }
 
-        @Override
-        public ArrayList<String> readFromBundle(Bundle bundle, String key) {
-            return bundle.getStringArrayList(key);
-        }
-    };
+                @Override
+                public ArrayList<String> readFromBundle(Bundle bundle, String key) {
+                    return bundle.getStringArrayList(key);
+                }
+            };
 
     private static final InnerListBundler<CharSequence> CHAR_SEQUENCE_LIST_BUNDLER
             = new InnerListBundler<CharSequence>() {
@@ -64,18 +66,19 @@ class ArrayListBundler {
         }
     };
 
-    private static final InnerListBundler<Parcelable> PARCELABLE_LIST_BUNDLER = new InnerListBundler<Parcelable>() {
+    private static final InnerListBundler<Parcelable> PARCELABLE_LIST_BUNDLER =
+            new InnerListBundler<Parcelable>() {
 
-        @Override
-        public void writeToBundle(ArrayList<Parcelable> list, Bundle bundle, String key) {
-            bundle.putParcelableArrayList(key, list);
-        }
+                @Override
+                public void writeToBundle(ArrayList<Parcelable> list, Bundle bundle, String key) {
+                    bundle.putParcelableArrayList(key, list);
+                }
 
-        @Override
-        public ArrayList<Parcelable> readFromBundle(Bundle bundle, String key) {
-            return bundle.getParcelableArrayList(key);
-        }
-    };
+                @Override
+                public ArrayList<Parcelable> readFromBundle(Bundle bundle, String key) {
+                    return bundle.getParcelableArrayList(key);
+                }
+            };
 
     private static class EnumListBundler<E> implements InnerListBundler<E> {
 
@@ -92,39 +95,46 @@ class ArrayListBundler {
 
         @Override
         public ArrayList<E> readFromBundle(Bundle bundle, String key) {
-            return EnumUtils.ordinalArrayListToEnumArrayList(eClass, bundle.getIntegerArrayList(key));
+            return EnumUtils.ordinalArrayListToEnumArrayList(eClass,
+                                                             bundle.getIntegerArrayList(key));
         }
     }
 
-    private static final InnerListBundler<Object> FALLBACK_LIST_BUNDLER = new InnerListBundler<Object>() {
+    private static final InnerListBundler<Object> FALLBACK_LIST_BUNDLER =
+            new InnerListBundler<Object>() {
 
-        @Override
-        public void writeToBundle(ArrayList<Object> list, Bundle bundle, String key) {
-            ArrayList<Parcelable> wrapped = new ArrayList<>(list.size());
-            ParcelableAdapters.toParcelableCollection(list, wrapped);
-            bundle.putParcelableArrayList(key, wrapped);
-        }
+                @Override
+                public void writeToBundle(ArrayList<Object> list, Bundle bundle, String key) {
+                    ArrayList<Parcelable> wrapped = new ArrayList<>(list.size());
+                    ParcelableAdapters.toParcelableCollection(list, wrapped);
+                    bundle.putParcelableArrayList(key, wrapped);
+                }
 
-        @Override
-        public ArrayList<Object> readFromBundle(Bundle bundle, String key) {
-            ArrayList<Parcelable> wrapped = bundle.getParcelableArrayList(key);
-            if (wrapped == null) {
-                return null;
-            }
+                @Override
+                public ArrayList<Object> readFromBundle(Bundle bundle, String key) {
+                    ArrayList<Parcelable> wrapped = bundle.getParcelableArrayList(key);
+                    if (wrapped == null) {
+                        return null;
+                    }
 
-            ArrayList<Object> unwrapped = new ArrayList<>(wrapped.size());
-            for (Parcelable parcelable : wrapped) {
-                unwrapped.add(ParcelableAdapters.unwrapParcelable(parcelable));
-            }
-            return unwrapped;
-        }
-    };
+                    ArrayList<Object> unwrapped = new ArrayList<>(wrapped.size());
+                    for (Parcelable parcelable : wrapped) {
+                        unwrapped.add(ParcelableAdapters.unwrapParcelable(parcelable));
+                    }
+                    return unwrapped;
+                }
+            };
 
-    public static <T> void writeArrayListToBundle(ArrayList<T> list, Bundle bundle, Class<T> itemClass, String key) {
+    public static <T> void writeArrayListToBundle(ArrayList<T> list,
+                                                  Bundle bundle,
+                                                  Class<T> itemClass,
+                                                  String key) {
         getListBundlerForItemClass(itemClass).writeToBundle(list, bundle, key);
     }
 
-    public static <T> ArrayList<T> readArrayListFromBundle(Bundle bundle, Class<T> itemClass, String key) {
+    public static <T> ArrayList<T> readArrayListFromBundle(Bundle bundle,
+                                                           Class<T> itemClass,
+                                                           String key) {
         return getListBundlerForItemClass(itemClass).readFromBundle(bundle, key);
     }
 
