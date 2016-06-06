@@ -35,7 +35,7 @@ import javax.tools.Diagnostic;
  */
 public class PostmanProcessor extends AbstractProcessor {
 
-    private Set<TypeElement> handledElements = new HashSet<TypeElement>();
+    private Set<TypeElement> handledElements = new HashSet<>();
 
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {

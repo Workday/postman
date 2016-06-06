@@ -57,8 +57,8 @@ public class AbstractMapParcelableAdapter<T extends Map> implements ParcelableAd
             final Map<Object, Object> castedMap = (Map<Object, Object>) map;
             for (int i = 0; i < keys.length; i++) {
                 final Object key = ParcelableAdapters.unwrapParcelable(keys[i]);
-                final Object value = ParcelableAdapters.unwrapParcelable(values[i]);
-                castedMap.put(key, value);
+                final Object val = ParcelableAdapters.unwrapParcelable(values[i]);
+                castedMap.put(key, val);
             }
             return newParcelableAdapterInstance(map);
         }
