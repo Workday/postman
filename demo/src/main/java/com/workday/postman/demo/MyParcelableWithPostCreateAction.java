@@ -24,6 +24,9 @@ import java.util.Map;
 @Parceled
 public class MyParcelableWithPostCreateAction implements Parcelable {
 
+    public static final Creator<MyParcelableWithPostCreateAction> CREATOR = Postman.getCreator(
+            MyParcelableWithPostCreateAction.class);
+
     MyChildParcelable myChildParcelable;
     ArrayList<MyChildParcelable> myChildren;
     MySerializable mySerializable;
@@ -36,9 +39,6 @@ public class MyParcelableWithPostCreateAction implements Parcelable {
             ((MyChildParcelable) child).aString += " seen";
         }
     }
-
-    public static final Creator<MyParcelableWithPostCreateAction> CREATOR = Postman.getCreator(
-            MyParcelableWithPostCreateAction.class);
 
     @Override
     public int describeContents() {

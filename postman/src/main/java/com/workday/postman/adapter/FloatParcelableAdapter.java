@@ -17,10 +17,6 @@ public class FloatParcelableAdapter implements ParcelableAdapter<Float> {
 
     private final Float value;
 
-    public FloatParcelableAdapter(Float value) {
-        this.value = value;
-    }
-
     public static final Creator<FloatParcelableAdapter> CREATOR =
             new Creator<FloatParcelableAdapter>() {
 
@@ -35,6 +31,10 @@ public class FloatParcelableAdapter implements ParcelableAdapter<Float> {
                     return new FloatParcelableAdapter[size];
                 }
             };
+
+    public FloatParcelableAdapter(Float value) {
+        this.value = value;
+    }
 
     @Override
     public int describeContents() {

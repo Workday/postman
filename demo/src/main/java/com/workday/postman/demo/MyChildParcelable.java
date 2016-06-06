@@ -24,15 +24,12 @@ public class MyChildParcelable implements Parcelable {
     public static final Creator<MyChildParcelable> CREATOR =
             Postman.getCreator(MyChildParcelable.class);
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
+    String aString;
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        Postman.writeToParcel(this, dest);
-    }
+    Boolean aBoolean;
+
+    @NotParceled
+    String notParceled;
 
     public MyChildParcelable() {
 
@@ -43,10 +40,14 @@ public class MyChildParcelable implements Parcelable {
         this.aBoolean = aBoolean;
     }
 
-    String aString;
+    @Override
+    public int describeContents() {
+        return 0;
+    }
 
-    Boolean aBoolean;
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        Postman.writeToParcel(this, dest);
+    }
 
-    @NotParceled
-    String notParceled;
 }

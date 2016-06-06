@@ -20,9 +20,6 @@ import java.util.ArrayList;
  */
 class ArrayListBundler {
 
-    private ArrayListBundler() {
-    }
-
     private static final InnerListBundler<Integer> INTEGER_LIST_BUNDLER
             = new InnerListBundler<Integer>() {
 
@@ -103,6 +100,9 @@ class ArrayListBundler {
                     return unwrapped;
                 }
             };
+
+    private ArrayListBundler() {
+    }
 
     public static <T> void writeArrayListToBundle(ArrayList<T> list, Bundle bundle,
                                                   Class<T> itemClass, String key) {

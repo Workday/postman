@@ -17,10 +17,6 @@ public class IntParcelableAdapter implements ParcelableAdapter<Integer> {
 
     private final Integer value;
 
-    public IntParcelableAdapter(Integer value) {
-        this.value = value;
-    }
-
     public static final Creator<IntParcelableAdapter> CREATOR =
             new Creator<IntParcelableAdapter>() {
 
@@ -35,6 +31,10 @@ public class IntParcelableAdapter implements ParcelableAdapter<Integer> {
                     return new IntParcelableAdapter[size];
                 }
             };
+
+    public IntParcelableAdapter(Integer value) {
+        this.value = value;
+    }
 
     @Override
     public int describeContents() {

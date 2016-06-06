@@ -19,10 +19,6 @@ public class BigDecimalParcelableAdapter implements ParcelableAdapter<BigDecimal
 
     private final BigDecimal value;
 
-    public BigDecimalParcelableAdapter(BigDecimal value) {
-        this.value = value;
-    }
-
     public static final Creator<BigDecimalParcelableAdapter> CREATOR =
             new Creator<BigDecimalParcelableAdapter>() {
 
@@ -37,6 +33,10 @@ public class BigDecimalParcelableAdapter implements ParcelableAdapter<BigDecimal
                     return new BigDecimalParcelableAdapter[size];
                 }
             };
+
+    public BigDecimalParcelableAdapter(BigDecimal value) {
+        this.value = value;
+    }
 
     @Override
     public int describeContents() {

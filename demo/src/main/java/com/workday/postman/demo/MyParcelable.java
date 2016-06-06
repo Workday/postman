@@ -26,23 +26,6 @@ public class MyParcelable implements Parcelable {
 
     public static final Creator<MyParcelable> CREATOR = Postman.getCreator(MyParcelable.class);
 
-    public MyParcelable() {}
-
-    public MyParcelable(String myString) {
-        this.myString = myString;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        Postman.writeToParcel(this, dest);
-
-    }
-
     @Parceled
     int myInt;
 
@@ -74,4 +57,21 @@ public class MyParcelable implements Parcelable {
     Set<Integer> myIntegerSet;
 
     BigDecimal notParceled;
+
+    public MyParcelable() {}
+
+    public MyParcelable(String myString) {
+        this.myString = myString;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        Postman.writeToParcel(this, dest);
+
+    }
 }
