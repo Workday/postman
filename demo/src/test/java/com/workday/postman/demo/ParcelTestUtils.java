@@ -14,7 +14,7 @@ import org.robolectric.RuntimeEnvironment;
 
 public class ParcelTestUtils {
 
-    public ParcelTestUtils() {
+    private ParcelTestUtils() {
     }
 
     public static <T extends Parcelable> T writeAndReadParcelable(Parcelable in) {
