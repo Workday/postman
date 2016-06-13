@@ -28,9 +28,9 @@ public class CharSequenceParcelableAdapter implements ParcelableAdapter<CharSequ
 
                 @Override
                 public CharSequenceParcelableAdapter createFromParcel(Parcel source) {
-                    final CharSequence value =
+                    final CharSequence val =
                             TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(source);
-                    return new CharSequenceParcelableAdapter(value);
+                    return new CharSequenceParcelableAdapter(val);
                 }
 
                 @Override

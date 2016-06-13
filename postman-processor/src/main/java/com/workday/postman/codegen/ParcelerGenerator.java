@@ -91,7 +91,7 @@ class ParcelerGenerator {
     }
 
     private Set<String> getImports() {
-        Set<String> imports = new HashSet<String>();
+        Set<String> imports = new HashSet<>();
         imports.add("android.os.Bundle");
         imports.add("android.os.Parcel");
         imports.add(Parceler.class.getCanonicalName());
@@ -99,7 +99,7 @@ class ParcelerGenerator {
     }
 
     private void writeWriteToParcelMethod(JavaWriter writer) throws IOException {
-        List<String> parameters = new ArrayList<String>(4);
+        List<String> parameters = new ArrayList<>(4);
         parameters.add(elementCompressedName);
         parameters.add("object");
         parameters.add("Parcel");

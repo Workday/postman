@@ -122,7 +122,7 @@ class ParceledElementExtractor {
     }
 
     private Collection<VariableElement> extractValidFields(Collection<VariableElement> allFields) {
-        Collection<VariableElement> validFields = new ArrayList<VariableElement>(allFields.size());
+        Collection<VariableElement> validFields = new ArrayList<>(allFields.size());
         for (VariableElement field : allFields) {
             boolean shouldAdd = true;
 
@@ -162,7 +162,7 @@ class ParceledElementExtractor {
     private Collection<VariableElement> extractAnnotatedFields(Collection<VariableElement>
                                                                        allFields) {
         Collection<VariableElement> validAnnotatedFields =
-                new ArrayList<VariableElement>(allFields.size());
+                new ArrayList<>(allFields.size());
 
         for (VariableElement field : allFields) {
             boolean shouldAdd = hasParceledAnnotation(field);
