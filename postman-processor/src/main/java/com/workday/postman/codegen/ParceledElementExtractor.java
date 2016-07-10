@@ -75,14 +75,14 @@ class ParceledElementExtractor {
         boolean isValid = true;
         if (CodeAnalysisUtils.isPrivate(method)) {
             isValid = false;
-            String message = String.format("Method annotated with @%s cannot be private.",
+            String message = String.format("Methods annotated with @%s cannot be private.",
                                            PostCreateChild.class.getSimpleName());
             processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, message, method);
         }
 
         if (CodeAnalysisUtils.isStatic(method)) {
             isValid = false;
-            String message = String.format("Method annotated with @%s cannot be static.",
+            String message = String.format("Methods annotated with @%s cannot be static.",
                                            PostCreateChild.class.getSimpleName());
             processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, message, method);
         }
@@ -91,7 +91,7 @@ class ParceledElementExtractor {
                 || !metatypes.isSameType(method.getParameters().get(0).asType(), Object.class)) {
             isValid = false;
             String message = String.format(Locale.US,
-                                           "Method annotated with @%s must take a single argument"
+                                           "Methods annotated with @%s must take a single argument"
                                                    + " of type Object.",
                                            PostCreateChild.class.getSimpleName());
             processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, message, method);
@@ -143,11 +143,21 @@ class ParceledElementExtractor {
                     shouldAdd = false;
                 }
 
+                if (CodeAnalysisUtils.isStatic(field)) {
+                    String message = String.format(
+                            "Static field %s will be parceled, but you probably don't want it to "
+                                    + "be. You can mark this field as not parceled with @%s.",
+                            field.getSimpleName(),
+                            NotParceled.class.getSimpleName());
+                    messager.printMessage(Diagnostic.Kind.WARNING, message, field);
+                }
+
                 if (hasParceledAnnotation(field)) {
                     String message = String.format(
-                            "@%s annotations are ignored when the enclosing class is annotated "
-                                    + "with @%s.",
-                            Parceled.class.getSimpleName(), Parceled.class.getSimpleName());
+                            "@%s annotations are ignored on fields when the enclosing class is "
+                                    + "annotated with @%s.",
+                            Parceled.class.getSimpleName(),
+                            Parceled.class.getSimpleName());
                     messager.printMessage(Diagnostic.Kind.WARNING, message, field);
                 }
             }
@@ -170,7 +180,7 @@ class ParceledElementExtractor {
             if (hasNotParceledAnnotation(field)) {
                 String message = String.format(
                         "@%s annotations are ignored when the enclosing class is not annotated "
-                                + "with @%s",
+                                + "with @%s.",
                         NotParceled.class.getSimpleName(),
                         Parceled.class.getSimpleName());
                 messager.printMessage(Diagnostic.Kind.WARNING, message, field);
@@ -186,6 +196,14 @@ class ParceledElementExtractor {
                 String message = "Cannot access final fields when parceling.";
                 messager.printMessage(Diagnostic.Kind.ERROR, message, field);
                 shouldAdd = false;
+            }
+
+            if (hasParceledAnnotation(field) && CodeAnalysisUtils.isStatic(field)) {
+                String message = String.format(
+                        "You marked static field %s as parceled, but that's probably not what you"
+                                + " wanted to do.",
+                        field.getSimpleName());
+                messager.printMessage(Diagnostic.Kind.WARNING, message, field);
             }
 
             if (shouldAdd) {

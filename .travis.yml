@@ -5,4 +5,4 @@ android:
     - android-23
     - build-tools-23.0.1
 
-script: ./gradlew assemble check
+script: ./gradlew build
