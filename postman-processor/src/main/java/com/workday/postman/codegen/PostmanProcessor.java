@@ -15,6 +15,7 @@ import com.workday.postman.util.CollectionUtils;
 
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 
 import javax.annotation.processing.AbstractProcessor;
@@ -53,6 +54,22 @@ public class PostmanProcessor extends AbstractProcessor {
                 handledElements.add(parent);
             } else if (kind == ElementKind.CLASS) {
                 handledElements.add((TypeElement) e);
+            }
+        }
+
+        Set<? extends Element> postCreateChildElements =
+                roundEnv.getElementsAnnotatedWith(PostCreateChild.class);
+        for (Element e : postCreateChildElements) {
+            TypeElement parent = (TypeElement) e.getEnclosingElement();
+            if (!handledElements.contains(parent)) {
+                final String message = String.format(Locale.US,
+                                                     "You marked a method with @%s in a class "
+                                                             + "that has no @%s annotations. The "
+                                                             + "enclosing class will not be "
+                                                             + "parceled.",
+                                                     PostCreateChild.class.getSimpleName(),
+                                                     Parceled.class.getSimpleName());
+                processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, message, e);
             }
         }
 

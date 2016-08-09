@@ -353,8 +353,6 @@ public class PostmanProcessorTest {
                                  .onLine(8);
     }
 
-    // TODO: 2016-07-10 Implement this functionality
-    @Ignore
     @Test
     public void testPostCreateInClassWithNoParceledAnnotationsRaisesError() throws Exception {
         //language=JAVA
