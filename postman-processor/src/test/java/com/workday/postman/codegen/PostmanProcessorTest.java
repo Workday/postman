@@ -10,7 +10,6 @@ package com.workday.postman.codegen;
 import com.google.testing.compile.JavaFileObjects;
 import com.workday.postman.util.Names;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -151,8 +150,6 @@ public class PostmanProcessorTest {
                                  .onLine(6);
     }
 
-    // TODO: 2016-07-10 Implement this functionality
-    @Ignore
     @Test
     public void testNotParceledlAnnotatedFieldRaisesErrorInNonParceledClass() throws Exception {
         //language=JAVA
@@ -169,8 +166,8 @@ public class PostmanProcessorTest {
                                  .processedWith(new PostmanProcessor())
                                  .failsToCompile()
                                  .withErrorContaining(
-                                         "You marked a field as @NotParceled in a class that has "
-                                                 + "no @Parceled annotations. The enclosing "
+                                         "You marked an element with @NotParceled in a class that "
+                                                 + "has no @Parceled annotations. The enclosing "
                                                  + "class will not be parceled.")
                                  .in(source)
                                  .onLine(6);
@@ -368,7 +365,7 @@ public class PostmanProcessorTest {
                                  .processedWith(new PostmanProcessor())
                                  .failsToCompile()
                                  .withErrorContaining(
-                                         "You marked a method with @PostCreateChild in a class "
+                                         "You marked an element with @PostCreateChild in a class "
                                                  + "that has no @Parceled annotations. The "
                                                  + "enclosing class will not be parceled.")
                                  .in(source)
