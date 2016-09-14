@@ -1,5 +1,6 @@
 /*
  * Copyright 2015 Workday, Inc.
+ * Copyright 2016 Google, Inc.
  *
  * This software is available under the MIT license.
  * Please see the LICENSE.txt file in this project.
@@ -14,7 +15,9 @@ import com.workday.postman.parceler.Parceler;
 import com.workday.postman.util.CollectionUtils;
 
 import java.io.IOException;
+import java.lang.annotation.Annotation;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 
 import javax.annotation.processing.AbstractProcessor;
@@ -35,7 +38,6 @@ import javax.tools.Diagnostic;
  */
 public class PostmanProcessor extends AbstractProcessor {
 
-    private Set<TypeElement> handledElements = new HashSet<>();
 
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
@@ -43,6 +45,8 @@ public class PostmanProcessor extends AbstractProcessor {
         if (annotations == null || annotations.isEmpty()) {
             return false;
         }
+
+        final Set<TypeElement> handledElements = new HashSet<>();
 
         Set<? extends Element> annotatedElements =
                 roundEnv.getElementsAnnotatedWith(Parceled.class);
@@ -56,6 +60,9 @@ public class PostmanProcessor extends AbstractProcessor {
             }
         }
 
+        checkIfParentsParceled(roundEnv, handledElements, NotParceled.class);
+        checkIfParentsParceled(roundEnv, handledElements, PostCreateChild.class);
+
         for (TypeElement handledElement : handledElements) {
             ParcelerGenerator generator = new ParcelerGenerator(processingEnv, handledElement);
             try {
@@ -67,6 +74,26 @@ public class PostmanProcessor extends AbstractProcessor {
         }
 
         return true;
+    }
+
+    private void checkIfParentsParceled(RoundEnvironment roundEnv,
+                                        Set<TypeElement> handledElements,
+                                        Class<? extends Annotation> annotationType) {
+        Set<? extends Element> annotatedElements =
+                roundEnv.getElementsAnnotatedWith(annotationType);
+        for (Element e : annotatedElements) {
+            TypeElement parent = (TypeElement) e.getEnclosingElement();
+            if (!handledElements.contains(parent)) {
+                final String message = String.format(Locale.US,
+                                                     "You marked an element with @%s in a class "
+                                                             + "that has no @%s annotations. The "
+                                                             + "enclosing class will not be "
+                                                             + "parceled.",
+                                                     annotationType.getSimpleName(),
+                                                     Parceled.class.getSimpleName());
+                processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, message, e);
+            }
+        }
     }
 
     @Override
