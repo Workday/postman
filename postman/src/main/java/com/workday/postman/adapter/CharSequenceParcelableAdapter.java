@@ -18,10 +18,6 @@ public class CharSequenceParcelableAdapter implements ParcelableAdapter<CharSequ
 
     private final CharSequence value;
 
-    public CharSequenceParcelableAdapter(CharSequence value) {
-        this.value = value;
-    }
-
     public static final Creator<CharSequenceParcelableAdapter> CREATOR =
             new Creator<CharSequenceParcelableAdapter>() {
 
@@ -38,6 +34,10 @@ public class CharSequenceParcelableAdapter implements ParcelableAdapter<CharSequ
                     return new CharSequenceParcelableAdapter[size];
                 }
             };
+
+    public CharSequenceParcelableAdapter(CharSequence value) {
+        this.value = value;
+    }
 
     @Override
     public int describeContents() {

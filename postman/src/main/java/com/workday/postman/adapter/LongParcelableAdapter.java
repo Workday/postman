@@ -17,10 +17,6 @@ public class LongParcelableAdapter implements ParcelableAdapter<Long> {
 
     private final Long value;
 
-    public LongParcelableAdapter(Long value) {
-        this.value = value;
-    }
-
     public static final Creator<LongParcelableAdapter> CREATOR =
             new Creator<LongParcelableAdapter>() {
 
@@ -35,6 +31,10 @@ public class LongParcelableAdapter implements ParcelableAdapter<Long> {
                     return new LongParcelableAdapter[size];
                 }
             };
+
+    public LongParcelableAdapter(Long value) {
+        this.value = value;
+    }
 
     @Override
     public int describeContents() {

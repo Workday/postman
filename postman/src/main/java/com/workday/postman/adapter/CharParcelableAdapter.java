@@ -17,10 +17,6 @@ public class CharParcelableAdapter implements ParcelableAdapter<Character> {
 
     private final Character value;
 
-    public CharParcelableAdapter(Character value) {
-        this.value = value;
-    }
-
     public static final Creator<CharParcelableAdapter> CREATOR =
             new Creator<CharParcelableAdapter>() {
 
@@ -35,6 +31,10 @@ public class CharParcelableAdapter implements ParcelableAdapter<Character> {
                     return new CharParcelableAdapter[size];
                 }
             };
+
+    public CharParcelableAdapter(Character value) {
+        this.value = value;
+    }
 
     @Override
     public int describeContents() {

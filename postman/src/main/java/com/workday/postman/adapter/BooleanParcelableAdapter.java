@@ -17,10 +17,6 @@ public class BooleanParcelableAdapter implements ParcelableAdapter<Boolean> {
 
     private final Boolean value;
 
-    public BooleanParcelableAdapter(Boolean value) {
-        this.value = value;
-    }
-
     public static final Creator<BooleanParcelableAdapter> CREATOR =
             new Creator<BooleanParcelableAdapter>() {
 
@@ -35,6 +31,10 @@ public class BooleanParcelableAdapter implements ParcelableAdapter<Boolean> {
                     return new BooleanParcelableAdapter[size];
                 }
             };
+
+    public BooleanParcelableAdapter(Boolean value) {
+        this.value = value;
+    }
 
     @Override
     public int describeContents() {

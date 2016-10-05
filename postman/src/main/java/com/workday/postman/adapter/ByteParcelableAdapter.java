@@ -17,10 +17,6 @@ public class ByteParcelableAdapter implements ParcelableAdapter<Byte> {
 
     private final Byte value;
 
-    public ByteParcelableAdapter(Byte value) {
-        this.value = value;
-    }
-
     public static final Creator<ByteParcelableAdapter> CREATOR =
             new Creator<ByteParcelableAdapter>() {
 
@@ -35,6 +31,10 @@ public class ByteParcelableAdapter implements ParcelableAdapter<Byte> {
                     return new ByteParcelableAdapter[size];
                 }
             };
+
+    public ByteParcelableAdapter(Byte value) {
+        this.value = value;
+    }
 
     @Override
     public int describeContents() {

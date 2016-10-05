@@ -17,10 +17,6 @@ public class ShortParcelableAdapter implements ParcelableAdapter<Short> {
 
     private final Short value;
 
-    public ShortParcelableAdapter(Short value) {
-        this.value = value;
-    }
-
     public static final Creator<ShortParcelableAdapter> CREATOR =
             new Creator<ShortParcelableAdapter>() {
 
@@ -35,6 +31,10 @@ public class ShortParcelableAdapter implements ParcelableAdapter<Short> {
                     return new ShortParcelableAdapter[size];
                 }
             };
+
+    public ShortParcelableAdapter(Short value) {
+        this.value = value;
+    }
 
     @Override
     public int describeContents() {

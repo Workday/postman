@@ -19,10 +19,6 @@ public class BigIntegerParcelableAdapter implements ParcelableAdapter<BigInteger
 
     private final BigInteger value;
 
-    public BigIntegerParcelableAdapter(BigInteger value) {
-        this.value = value;
-    }
-
     public static final Creator<BigIntegerParcelableAdapter> CREATOR =
             new Creator<BigIntegerParcelableAdapter>() {
 
@@ -37,6 +33,10 @@ public class BigIntegerParcelableAdapter implements ParcelableAdapter<BigInteger
                     return new BigIntegerParcelableAdapter[size];
                 }
             };
+
+    public BigIntegerParcelableAdapter(BigInteger value) {
+        this.value = value;
+    }
 
     @Override
     public int describeContents() {

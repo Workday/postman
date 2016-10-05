@@ -17,10 +17,6 @@ public class StringParcelableAdapter implements ParcelableAdapter<String> {
 
     private final String value;
 
-    public StringParcelableAdapter(String value) {
-        this.value = value;
-    }
-
     public static final Creator<StringParcelableAdapter> CREATOR =
             new Creator<StringParcelableAdapter>() {
 
@@ -35,6 +31,10 @@ public class StringParcelableAdapter implements ParcelableAdapter<String> {
                     return new StringParcelableAdapter[size];
                 }
             };
+
+    public StringParcelableAdapter(String value) {
+        this.value = value;
+    }
 
     @Override
     public int describeContents() {

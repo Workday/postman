@@ -17,10 +17,6 @@ public class DoubleParcelableAdapter implements ParcelableAdapter<Double> {
 
     private final Double value;
 
-    public DoubleParcelableAdapter(Double value) {
-        this.value = value;
-    }
-
     public static final Creator<DoubleParcelableAdapter> CREATOR =
             new Creator<DoubleParcelableAdapter>() {
 
@@ -35,6 +31,10 @@ public class DoubleParcelableAdapter implements ParcelableAdapter<Double> {
                     return new DoubleParcelableAdapter[size];
                 }
             };
+
+    public DoubleParcelableAdapter(Double value) {
+        this.value = value;
+    }
 
     @Override
     public int describeContents() {
