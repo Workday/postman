@@ -10,7 +10,7 @@ __Build Status:__ [![Build Status](https://travis-ci.org/Workday/postman.svg?bra
 
 Postman is intended to be used in cases where you have parcelable classes with a lot of fields that need to be serialized. At Workday, we had a lot of classes like the following to represent the responses from server.
 
-```
+```java
 public class MyParcelable implements Parcelable {
 
     int myInt;
@@ -18,9 +18,9 @@ public class MyParcelable implements Parcelable {
     MyChildParcelable myChildParcelable;
     ArrayList<MyChildParcelable> myParcelableList;
     ArrayList<String> myStringList;
- 
+
     public static final Creator<MyParcelable> CREATOR = new Creator<MyParcelable>() {
- 
+
         @Override
         public MyParcelable createFromParcel(Parcel source) {
             MyParcelable myParcelable = new MyParcelable();
@@ -32,18 +32,18 @@ public class MyParcelable implements Parcelable {
             myParcelable.myStringList = bundle.getStringArrayList("myStringList");
             return myParcelable;
         }
- 
+
         @Override
         public MyParcelable[] newArray(int size) {
             return new MyParcelable[size];
         }
     };
- 
+
     @Override
     public int describeContents() {
         return 0;
     }
- 
+
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         Bundle bundle = new Bundle();
@@ -65,7 +65,7 @@ There is nothing fancy or unexpected in making a class parcelable. There is a lo
 
 We wrote an annotation processor that can read through a class that you mark as a candidate for processing, and it will generate all the code in the `Creator` and in `writeToParcel(Parcel, int)`. The same class from above now becomes this:
 
-```
+```java
 @Parceled
 public class MyParcelable implements Parcelable {
 
@@ -74,9 +74,9 @@ public class MyParcelable implements Parcelable {
     MyChildParcelable myChildParcelable;
     ArrayList<MyChildParcelable> myParcelableList;
     ArrayList<String> myStringList;
- 
+
     public static final Creator<MyParcelable> CREATOR = Postman.getCreator(MyParcelable.class);
- 
+
     @Override
     public int describeContents() {
         return 0;
@@ -94,7 +94,7 @@ That's all you need to do get Postman working!
 
 Add the following lines to your `build.gradle` file, replacing `$postman_version` with latest version from Maven Central.
 
-```
+```gradle
 repositories {
     mavenCentral()
 }
@@ -107,24 +107,24 @@ dependencies {
 
 Note that if you use the [android-apt plugin](https://bitbucket.org/hvisser/android-apt) or the [kotlin-android plugin](https://kotlinlang.org/docs/reference/using-gradle.html), you may use `apt` or `kapt` respectively instead of `compile` for `postman-processor`, e.g.
 
-```
+```gradle
 apt "com.workday:postman-processor:$postman_version"
 ```
 
 ### Postman Idioms
 
-The previous example demonstrates the most common way you will use Postman: annotate the class in question with `@Parceled`. Postman will pick up all member fields in the class and write them to or read them from the Parcel when `Postman.writeToParcel(Object, Parcel)` or `Postman.readFromParcel(Class, Parcel)` is called. 
+The previous example demonstrates the most common way you will use Postman: annotate the class in question with `@Parceled`. Postman will pick up all member fields in the class and write them to or read them from the Parcel when `Postman.writeToParcel(Object, Parcel)` or `Postman.readFromParcel(Class, Parcel)` is called.
 
 Unfortunately, there is still some boiler plate code you have to deal with. In your parcelable class, you must include the following lines:
 
-```
+```java
 public static final Creator<MyParcelable> CREATOR = Postman.getCreator(MyParcelable.class);
- 
+
 @Override
 public int describeContents() {
   return 0;
 }
- 
+
 @Override
 public void writeToParcel(Parcel dest, int flags) {
   Postman.writeToParcel(this, dest);
@@ -176,9 +176,11 @@ Note that Postman will compile if it encounters a `List<Object>` or a `Map<Strin
 
 If you're using [ProGuard](http://proguard.sourceforge.net/), you must add the following line to your ProGuard rules
 
-    -keep class * implements com.workday.postman.parceler.Parceler
-    -dontwarn com.workday.postman.codegen.*
+```
+-keep class * implements com.workday.postman.parceler.Parceler
+-dontwarn com.workday.postman.codegen.*
+```
 
-otherwise your app will blow up. 
+otherwise your app will blow up.
 
 Postman also doesn't work with obfuscation, so you if you have obfuscation turned on, you'll need to keep all of your parceled classes.
